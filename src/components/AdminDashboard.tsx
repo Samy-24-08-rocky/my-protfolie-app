@@ -177,7 +177,7 @@ const OverviewTab = () => {
 
 const BrandingTab = ({ onSuccess }: { onSuccess: () => void }) => {
     const [branding, setBranding] = useState({
-        name: "SG & DIGITALTECHFIRM",
+        name: "SUMIT GILL",
         title: "Crafting Modern \n Digital Experiences",
         desc: "I'm a Full-Stack Developer specializing in React, Next.js, and Mobile apps. Transforming complex problems into elegant, user-centric solutions."
     });
