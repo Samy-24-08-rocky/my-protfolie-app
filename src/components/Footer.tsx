@@ -11,6 +11,7 @@ import {
     ArrowUpRight,
     Mail,
     Phone,
+    MessageCircle,
     ArrowRight
 } from "lucide-react";
 import styles from "./Footer.module.css";
@@ -81,6 +82,11 @@ const Footer = () => {
                             <li>
                                 <a href="tel:+918264888290" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
                                     <Phone size={16} /> +91 82648 88290
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://wa.me/918264888290" target="_blank" rel="noreferrer" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                    <MessageCircle size={16} /> WhatsApp
                                 </a>
                             </li>
                             <li className={styles.navLink}>
