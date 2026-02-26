@@ -11,7 +11,7 @@ import Magnetic from "./Magnetic";
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [brandName, setBrandName] = useState("SUMIT GILL");
+    const [brandName, setBrandName] = useState("SG & DIGITALTECHFIRM");
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
