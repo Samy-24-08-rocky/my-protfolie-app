@@ -78,8 +78,10 @@ const Footer = () => {
                                     <Mail size={16} /> sumitgill375@gmail.com
                                 </a>
                             </li>
-                            <li className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <Phone size={16} /> +91 82648 88290
+                            <li>
+                                <a href="tel:+918264888290" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                    <Phone size={16} /> +91 82648 88290
+                                </a>
                             </li>
                             <li className={styles.navLink}>
                                 Bathinda, Punjab, India

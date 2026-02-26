@@ -34,17 +34,24 @@ const Contact = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className={styles.contactItem}
                             >
-                                <div className={styles.iconBox}>{item.icon}</div>
-                                <div>
-                                    <p style={{ margin: 0, fontSize: "0.8rem" }}>{item.label}</p>
-                                    {item.href ? (
-                                        <a href={item.href} style={{ margin: 0, fontWeight: "bold", textDecoration: "none", color: "inherit" }}>{item.value}</a>
-                                    ) : (
-                                        <p style={{ margin: 0, fontWeight: "bold" }}>{item.value}</p>
-                                    )}
-                                </div>
+                                {item.href ? (
+                                    <a href={item.href} className={styles.contactItem} style={{ textDecoration: "none", color: "inherit" }}>
+                                        <div className={styles.iconBox}>{item.icon}</div>
+                                        <div>
+                                            <p style={{ margin: 0, fontSize: "0.8rem" }}>{item.label}</p>
+                                            <p style={{ margin: 0, fontWeight: "bold" }}>{item.value}</p>
+                                        </div>
+                                    </a>
+                                ) : (
+                                    <div className={styles.contactItem}>
+                                        <div className={styles.iconBox}>{item.icon}</div>
+                                        <div>
+                                            <p style={{ margin: 0, fontSize: "0.8rem" }}>{item.label}</p>
+                                            <p style={{ margin: 0, fontWeight: "bold" }}>{item.value}</p>
+                                        </div>
+                                    </div>
+                                )}
                             </motion.div>
                         ))}
                     </div>
@@ -121,7 +128,7 @@ const Contact = () => {
                     </form>
                 </motion.div>
             </div>
-        </section>
+        </section >
     );
 };
 
