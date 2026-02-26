@@ -82,7 +82,7 @@ const Footer = () => {
                                 <Phone size={16} /> +91 82648 88290
                             </li>
                             <li className={styles.navLink}>
-                                New Delhi, India
+                                Bathinda, Punjab, India
                             </li>
                         </ul>
                     </div>

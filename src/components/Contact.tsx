@@ -27,7 +27,7 @@ const Contact = () => {
                         {[
                             { icon: <Mail size={20} />, label: "Email Me", value: "sumitgill375@gmail.com", href: "mailto:sumitgill375@gmail.com" },
                             { icon: <Phone size={20} />, label: "Call Me", value: "+91 82648 88290", href: "tel:+918264888290" },
-                            { icon: <MapPin size={20} />, label: "Location", value: "New Delhi, India" }
+                            { icon: <MapPin size={20} />, label: "Location", value: "Bathinda, Punjab, India" }
                         ].map((item, i) => (
                             <motion.div
                                 key={i}
