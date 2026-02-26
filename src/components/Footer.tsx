@@ -10,6 +10,7 @@ import {
     Code2,
     ArrowUpRight,
     Mail,
+    Phone,
     ArrowRight
 } from "lucide-react";
 import styles from "./Footer.module.css";
@@ -72,8 +73,13 @@ const Footer = () => {
                     <div className={styles.navCol}>
                         <h4>Contact Info</h4>
                         <ul className={styles.navLinks}>
+                            <li>
+                                <a href="mailto:sumitgill375@gmail.com" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                    <Mail size={16} /> sumitgill375@gmail.com
+                                </a>
+                            </li>
                             <li className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <Mail size={16} /> hello@sumitgill.com
+                                <Phone size={16} /> +91 82648 88290
                             </li>
                             <li className={styles.navLink}>
                                 New Delhi, India

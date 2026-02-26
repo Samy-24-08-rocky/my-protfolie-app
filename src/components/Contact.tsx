@@ -25,8 +25,8 @@ const Contact = () => {
 
                     <div className={styles.contactList}>
                         {[
-                            { icon: <Mail size={20} />, label: "Email Me", value: "hello@sumitgill.com", href: "mailto:hello@sumitgill.com" },
-                            { icon: <Phone size={20} />, label: "Call Me", value: "+91 98765 43210", href: "tel:+919876543210" },
+                            { icon: <Mail size={20} />, label: "Email Me", value: "sumitgill375@gmail.com", href: "mailto:sumitgill375@gmail.com" },
+                            { icon: <Phone size={20} />, label: "Call Me", value: "+91 82648 88290", href: "tel:+918264888290" },
                             { icon: <MapPin size={20} />, label: "Location", value: "New Delhi, India" }
                         ].map((item, i) => (
                             <motion.div
@@ -90,27 +90,27 @@ const Contact = () => {
                     }}>
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Full Name</label>
-                            <input name="name" type="text" className={styles.input} placeholder="John Doe" required />
+                            <input name="name" type="text" className={styles.input} required />
                         </div>
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Email Address</label>
-                            <input name="email" type="email" className={styles.input} placeholder="john@example.com" required />
+                            <input name="email" type="email" className={styles.input} required />
                         </div>
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Mobile Number</label>
-                            <input name="mobile" type="tel" className={styles.input} placeholder="+91 98765 43210" required />
+                            <input name="mobile" type="tel" className={styles.input} required />
                         </div>
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Subject</label>
-                            <input name="subject" type="text" className={styles.input} placeholder="Project Inquiry" required />
+                            <input name="subject" type="text" className={styles.input} required />
                         </div>
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Message</label>
-                            <textarea name="message" className={styles.textarea} rows={5} placeholder="Tell me about your project..." required></textarea>
+                            <textarea name="message" className={styles.textarea} rows={5} required></textarea>
                         </div>
 
                         <Magnetic>
