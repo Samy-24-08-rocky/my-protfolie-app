@@ -22,7 +22,7 @@ const initDb = async () => {
 
     try {
         await fs.access(dbPath);
-    } catch (error) {
+    } catch {
         await fs.writeFile(dbPath, JSON.stringify(defaultDb, null, 2));
     }
 };
@@ -35,6 +35,6 @@ export const readDb = async () => {
 };
 
 // Write data
-export const writeDb = async (data: any) => {
+export const writeDb = async (data: Record<string, unknown>) => {
     await fs.writeFile(dbPath, JSON.stringify(data, null, 2));
 };

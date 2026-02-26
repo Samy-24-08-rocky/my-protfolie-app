@@ -9,8 +9,19 @@ import Magnetic from "./Magnetic";
 
 import { useState, useEffect } from "react";
 
+interface Project {
+    _id?: string;
+    id?: string;
+    title: string;
+    description: string;
+    image?: string;
+    tags?: string[];
+    github?: string;
+    link?: string;
+}
+
 const Projects = () => {
-    const [projects, setProjects] = useState<any[]>([]);
+    const [projects, setProjects] = useState<Project[]>([]);
 
     useEffect(() => {
         const fetchProjectsData = async () => {
@@ -87,11 +98,14 @@ const Projects = () => {
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
                                 ) : (
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                    />
+                                    <>
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        />
+                                    </>
                                 )
                             ) : (
                                 <div style={{ width: '100%', height: '100%', background: 'var(--placeholder-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
