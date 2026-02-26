@@ -1,0 +1,138 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 24px 0;
+}
+
+.scrolled {
+    padding: 16px 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--nav-border);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.05em;
+    color: var(--text-main);
+}
+
+.logoIcon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logoIcon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.link:hover {
+    color: var(--text-main);
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 0.3s ease;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+.hireBtn {
+    padding: 10px 24px;
+    background: var(--text-main);
+    color: var(--background);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.hireBtn:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px var(--primary-glow);
+}
+
+.mobileToggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .links {
+        display: none;
+    }
+
+    .mobileToggle {
+        display: block;
+    }
+}
+
+.mobileMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--mobile-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobileLink {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}

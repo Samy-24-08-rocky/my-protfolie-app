@@ -1,0 +1,203 @@
+.footer {
+    position: relative;
+    padding: 100px 0 40px;
+    background: var(--background);
+    overflow: hidden;
+}
+
+/* Background Glows */
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+    opacity: 0.5;
+}
+
+.glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: var(--primary-glow);
+    filter: blur(150px);
+    bottom: -200px;
+    right: -100px;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+}
+
+/* CTA Section */
+.ctaSection {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.ctaTitle {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: -0.04em;
+}
+
+.ctaBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 36px;
+    background: var(--text-main);
+    color: var(--background);
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.ctaBtn:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
+}
+
+/* Main Content */
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 80px;
+}
+
+.brandCol h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.brandIcon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brandDesc {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.navCol h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-main);
+}
+
+.navLinks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.navLink {
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.navLink:hover {
+    color: var(--text-main);
+    transform: translateX(5px);
+}
+
+.socialGrid {
+    display: flex;
+    gap: 16px;
+}
+
+.socialIcon {
+    width: 44px;
+    height: 44px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.socialIcon:hover {
+    background: var(--text-main);
+    color: var(--background);
+    transform: translateY(-5px);
+}
+
+/* Copyright Section */
+.bottom {
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.legalLinks {
+    display: flex;
+    gap: 32px;
+}
+
+.legalLink {
+    transition: color 0.2s ease;
+}
+
+.legalLink:hover {
+    color: var(--text-main);
+}
+
+@media (max-width: 968px) {
+    .mainGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .brandCol h3,
+    .socialGrid {
+        justify-content: center;
+    }
+
+    .bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}

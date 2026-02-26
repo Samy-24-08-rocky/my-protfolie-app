@@ -1,0 +1,24 @@
+{
+  "projects": [],
+  "gallery": [
+    {
+      "title": "Screen Recording 2026-02-26 115251",
+      "type": "video",
+      "src": "https://res.cloudinary.com/dxynh20ul/video/upload/v1772087012/portfolio_uploads/vvxh7gtk5huqp4fhmiue.mp4",
+      "category": "Design",
+      "_id": "1772087015610",
+      "createdAt": "2026-02-26T06:23:35.610Z"
+    }
+  ],
+  "settings": [],
+  "messages": [
+    {
+      "name": "sumit gill",
+      "email": "test@gmail.com",
+      "subject": "making new project",
+      "message": "test",
+      "_id": "1772088637308",
+      "createdAt": "2026-02-26T06:50:37.308Z"
+    }
+  ]
+}
