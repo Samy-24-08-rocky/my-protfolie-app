@@ -15,7 +15,11 @@ import {
     CheckCircle2,
     Edit2,
     X,
-    Mail
+    Mail,
+    ShieldCheck,
+    Database,
+    RefreshCcw,
+    AlertTriangle
 } from "lucide-react";
 import styles from "./AdminDashboard.module.css";
 import Link from "next/link";
@@ -35,6 +39,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
         { id: "gallery", label: "Gallery", icon: <ImageIcon size={20} /> },
         { id: "skills", label: "Expertise", icon: <Code2 size={20} /> },
         { id: "messages", label: "Messages", icon: <Mail size={20} /> },
+        { id: "maintenance", label: "Maintenance", icon: <ShieldCheck size={20} /> },
     ];
 
     const showSaveSuccess = () => {
@@ -97,6 +102,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
                 {activeTab === "gallery" && <GalleryTab onSuccess={showSaveSuccess} />}
                 {activeTab === "skills" && <SkillsTab onSuccess={showSaveSuccess} />}
                 {activeTab === "messages" && <MessagesTab onSuccess={showSaveSuccess} />}
+                {activeTab === "maintenance" && <MaintenanceTab onSuccess={showSaveSuccess} />}
             </main>
         </div>
     );
@@ -484,6 +490,140 @@ const MessagesTab = ({ onSuccess }: { onSuccess: () => void }) => {
                     ))}
                 </div>
             )}
+        </div>
+    );
+};
+
+const MaintenanceTab = ({ onSuccess }: { onSuccess: () => void }) => {
+    const [duplicates, setDuplicates] = useState<{ projects: any[], gallery: any[] } | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    const handleClearCache = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/maintenance', {
+                method: 'POST',
+                body: JSON.stringify({ action: 'clear-cache' })
+            });
+            const data = await res.json();
+            setMessage(data.message || data.error);
+            onSuccess();
+        } catch (error) {
+            setMessage("Failed to clear cache");
+        }
+        setLoading(false);
+    };
+
+    const handleFindDuplicates = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/maintenance', {
+                method: 'POST',
+                body: JSON.stringify({ action: 'find-duplicates' })
+            });
+            const data = await res.json();
+            setDuplicates(data.duplicates);
+            setMessage("");
+        } catch (error) {
+            setMessage("Failed to scan duplicates");
+        }
+        setLoading(false);
+    };
+
+    const handleDeleteDuplicates = async () => {
+        if (!confirm("Are you sure you want to delete all identified duplicates? This action is permanent.")) return;
+        setLoading(true);
+        try {
+            const res = await fetch('/api/maintenance', {
+                method: 'POST',
+                body: JSON.stringify({ action: 'delete-duplicates' })
+            });
+            const data = await res.json();
+            setMessage(`Cleanup complete! Removed ${data.removedProjects} projects and ${data.removedGallery} gallery items.`);
+            setDuplicates(null);
+            onSuccess();
+        } catch (error) {
+            setMessage("Failed to delete duplicates");
+        }
+        setLoading(false);
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className={styles.card}>
+                <h3 className={styles.cardTitle}><RefreshCcw size={20} /> System Cache</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>
+                    Force revalidation of static pages and data. Use this if you've made changes that aren't appearing on the live site.
+                </p>
+                <button
+                    className={styles.saveBtn}
+                    onClick={handleClearCache}
+                    disabled={loading}
+                    style={{ opacity: loading ? 0.7 : 1 }}
+                >
+                    {loading ? "Processing..." : "Clear Website Cache"}
+                </button>
+            </div>
+
+            <div className={styles.card}>
+                <h3 className={styles.cardTitle}><Database size={20} /> Duplicate Content Finder</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>
+                    Scan your database for items with duplicate titles or media links to keep your portfolio lean and clean.
+                </p>
+
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+                    <button
+                        className={styles.saveBtn}
+                        onClick={handleFindDuplicates}
+                        disabled={loading}
+                        style={{ opacity: loading ? 0.7 : 1, background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}
+                    >
+                        {loading ? "Scanning..." : "Scan for Duplicates"}
+                    </button>
+
+                    {duplicates && (duplicates.projects.length > 0 || duplicates.gallery.length > 0) && (
+                        <button
+                            className={styles.saveBtn}
+                            onClick={handleDeleteDuplicates}
+                            disabled={loading}
+                            style={{ background: '#ff4444', color: '#fff' }}
+                        >
+                            Delete Found Duplicates
+                        </button>
+                    )}
+                </div>
+
+                {message && (
+                    <div style={{ padding: '12px', background: 'rgba(0, 242, 255, 0.1)', borderRadius: '8px', border: '1px solid rgba(0, 242, 255, 0.2)', marginBottom: '20px', fontSize: '0.9rem' }}>
+                        <CheckCircle2 size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                        {message}
+                    </div>
+                )}
+
+                {duplicates && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {duplicates.projects.length === 0 && duplicates.gallery.length === 0 ? (
+                            <p style={{ color: '#00ff00', fontSize: '0.9rem' }}>No duplicates found. Your database is clean!</p>
+                        ) : (
+                            <>
+                                <p style={{ color: '#ffcc00', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <AlertTriangle size={16} />
+                                    Found {duplicates.projects.length} project duplicates and {duplicates.gallery.length} gallery duplicates.
+                                </p>
+                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', maxHeight: '200px', overflowY: 'auto', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px' }}>
+                                    {duplicates.projects.map((p, idx) => (
+                                        <div key={`p-${idx}`}>Project: {p.title}</div>
+                                    ))}
+                                    {duplicates.gallery.map((g, idx) => (
+                                        <div key={`g-${idx}`}>Gallery: {g.title}</div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

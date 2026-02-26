@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import AdminDashboard from "@/components/AdminDashboard";
 import AdminLogin from "@/components/AdminLogin";
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isChecking, setIsChecking] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const auth = localStorage.getItem("admin_auth");
@@ -26,6 +28,7 @@ export default function AdminPage() {
     const handleLogout = () => {
         setIsAuthenticated(false);
         localStorage.removeItem("admin_auth");
+        router.push("/");
     };
 
     if (isChecking) return null;
