@@ -15,6 +15,14 @@
     position: sticky;
     top: 0;
     height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 .logo {
@@ -71,6 +79,32 @@
 .content {
     padding: 60px;
     max-width: 1200px;
+    width: 100%;
+}
+
+.mobileHeader {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #080808;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menuBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .header {
@@ -221,11 +255,61 @@
         grid-template-columns: 1fr;
     }
 
+    .mobileHeader {
+        display: flex;
+    }
+
     .sidebar {
-        display: none;
+        position: fixed;
+        left: -100%;
+        top: 0;
+        z-index: 1000;
+        width: 280px;
+        height: 100dvh;
+        /* Use dynamic viewport height for mobile browsers */
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+    }
+
+    .sidebarActive {
+        left: 0;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        display: block;
     }
 
     .content {
-        padding: 40px 20px;
+        padding: 30px 16px;
     }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .miniCard {
+        padding: 16px;
+    }
+
+    .card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+}
+
+.overlay {
+    display: none;
 }

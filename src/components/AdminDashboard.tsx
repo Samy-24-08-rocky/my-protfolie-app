@@ -19,7 +19,8 @@ import {
     ShieldCheck,
     Database,
     RefreshCcw,
-    AlertTriangle
+    AlertTriangle,
+    Menu
 } from "lucide-react";
 import styles from "./AdminDashboard.module.css";
 import Link from "next/link";
@@ -31,6 +32,7 @@ interface AdminDashboardProps {
 const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
     const [activeTab, setActiveTab] = useState("overview");
     const [saveStatus, setSaveStatus] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const navItems = [
         { id: "overview", label: "Overview", icon: <LayoutDashboard size={20} /> },
@@ -47,10 +49,33 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
         setTimeout(() => setSaveStatus(false), 3000);
     };
 
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isMobileMenuOpen]);
+
     return (
         <div className={styles.dashboard}>
+            {/* Mobile Header */}
+            <div className={styles.mobileHeader}>
+                <div className={styles.logo} style={{ fontSize: '1.2rem' }}>
+                    <div className={styles.logoIcon} style={{ width: 28, height: 28 }}><Code2 size={16} /></div>
+                    <span>ADMIN</span>
+                </div>
+                <button className={styles.menuBtn} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                    {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                </button>
+            </div>
+
+            {/* Mobile Overlay */}
+            {isMobileMenuOpen && <div className={styles.overlay} onClick={() => setIsMobileMenuOpen(false)} />}
+
             {/* Sidebar */}
-            <aside className={styles.sidebar}>
+            <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.sidebarActive : ""}`}>
                 <div className={styles.logo}>
                     <div className={styles.logoIcon}><Code2 size={20} /></div>
                     <span>ADMIN PANEL</span>
@@ -61,7 +86,10 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
                         <div
                             key={item.id}
                             className={`${styles.navItem} ${activeTab === item.id ? styles.activeNavItem : ""}`}
-                            onClick={() => setActiveTab(item.id)}
+                            onClick={() => {
+                                setActiveTab(item.id);
+                                setIsMobileMenuOpen(false);
+                            }}
                         >
                             {item.icon}
                             {item.label}
