@@ -114,10 +114,7 @@ const Gallery = () => {
                             )}
                         </div>
 
-                        <div className={styles.overlay}>
-                            <p className={styles.itemCategory}>{item.category}</p>
-                            <h3 className={styles.itemTitle}>{item.title}</h3>
-                        </div>
+
                     </motion.div>
                 ))}
             </div>
