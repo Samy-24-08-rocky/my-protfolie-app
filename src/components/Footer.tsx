@@ -12,7 +12,8 @@ import {
     Mail,
     Phone,
     MessageCircle,
-    ArrowRight
+    ArrowRight,
+    Facebook
 } from "lucide-react";
 import styles from "./Footer.module.css";
 
@@ -102,6 +103,8 @@ const Footer = () => {
                             <a href="https://linkedin.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Linkedin size={20} /></a>
                             <a href="https://twitter.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Twitter size={20} /></a>
                             <a href="https://instagram.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
+                            <a href="https://facebook.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
+                            <a href="mailto:sumitgill375@gmail.com" className={styles.socialIcon}><Mail size={20} /></a>
                         </div>
                     </div>
                 </div>

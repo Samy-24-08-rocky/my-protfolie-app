@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle, Facebook } from "lucide-react";
 import styles from "./Contact.module.css";
 import { Reveal } from "./Reveal";
 import Magnetic from "./Magnetic";
@@ -26,6 +26,7 @@ const Contact = () => {
                     <div className={styles.contactList}>
                         {[
                             { icon: <Mail size={20} />, label: "Email Me", value: "sumitgill375@gmail.com", href: "mailto:sumitgill375@gmail.com" },
+                            { icon: <Facebook size={20} />, label: "Facebook", value: "Sumit Gill", href: "https://facebook.com" },
                             { icon: <Phone size={20} />, label: "Call Me", value: "+91 82648 88290", href: "tel:+918264888290" },
                             { icon: <MessageCircle size={20} />, label: "WhatsApp", value: "+91 82648 88290", href: "https://wa.me/918264888290" },
                             { icon: <MapPin size={20} />, label: "Location", value: "Bathinda, Punjab, India" }
