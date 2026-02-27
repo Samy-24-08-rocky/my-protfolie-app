@@ -241,6 +241,7 @@ const BrandingTab = ({ onSuccess }: { onSuccess: () => void }) => {
 
 const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
     const [projects, setProjects] = useState<any[]>([]);
+    const [isUploading, setIsUploading] = useState(false);
 
     const fetchProjects = async () => {
         try {
@@ -262,6 +263,7 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        setIsUploading(true);
         const formData = new FormData();
         formData.append('file', file);
 
@@ -293,6 +295,8 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
         } catch (error) {
             console.error("Upload failed", error);
             alert("Failed to upload image.");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -314,10 +318,10 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{p.description?.substring(0, 40)}...</p>
                     </div>
                 ))}
-                <label className={styles.addBtn} style={{ cursor: 'pointer' }}>
-                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
-                    <Plus size={32} />
-                    <span>Add New Project</span>
+                <label className={styles.addBtn} style={{ cursor: isUploading ? 'not-allowed' : 'pointer', opacity: isUploading ? 0.7 : 1 }}>
+                    <input type="file" accept="image/*" style={{ display: 'none' }} disabled={isUploading} onChange={handleImageUpload} />
+                    {isUploading ? <RefreshCcw size={32} className={styles.spin} /> : <Plus size={32} />}
+                    <span>{isUploading ? "Uploading..." : "Add New Project"}</span>
                 </label>
             </div>
         </div>
@@ -328,6 +332,7 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
     const [items, setItems] = useState<any[]>([]);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editData, setEditData] = useState<any>({});
+    const [isUploading, setIsUploading] = useState(false);
 
     const fetchItems = async () => {
         try {
@@ -349,6 +354,7 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        setIsUploading(true);
         const formData = new FormData();
         formData.append('file', file);
 
@@ -380,6 +386,8 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
         } catch (error) {
             console.error("Upload failed", error);
             alert("Failed to upload media.");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -445,10 +453,10 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
                         )}
                     </div>
                 ))}
-                <label className={styles.addBtn} style={{ cursor: 'pointer' }}>
-                    <input type="file" accept="image/*,video/*" style={{ display: 'none' }} onChange={handleMediaUpload} />
-                    <Plus size={32} />
-                    <span>Upload Media</span>
+                <label className={styles.addBtn} style={{ cursor: isUploading ? 'not-allowed' : 'pointer', opacity: isUploading ? 0.7 : 1 }}>
+                    <input type="file" accept="image/*,video/*" style={{ display: 'none' }} disabled={isUploading} onChange={handleMediaUpload} />
+                    {isUploading ? <RefreshCcw size={32} className={styles.spin} /> : <Plus size={32} />}
+                    <span>{isUploading ? "Uploading Media..." : "Upload Media"}</span>
                 </label>
             </div>
         </div>
