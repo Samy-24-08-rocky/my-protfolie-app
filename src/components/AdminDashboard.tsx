@@ -242,6 +242,8 @@ const BrandingTab = ({ onSuccess }: { onSuccess: () => void }) => {
 const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
     const [projects, setProjects] = useState<any[]>([]);
     const [isUploading, setIsUploading] = useState(false);
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editData, setEditData] = useState<any>({});
 
     const fetchProjects = async () => {
         try {
@@ -318,16 +320,95 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
         onSuccess();
     };
 
+    const startEdit = (project: any) => {
+        setEditingId(project._id);
+        const tagsString = Array.isArray(project.tags) ? project.tags.join(', ') : project.tags;
+        setEditData({ ...project, tags: tagsString });
+    };
+
+    const saveEdit = async () => {
+        const formattedData = {
+            ...editData,
+            tags: typeof editData.tags === 'string' ? editData.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : editData.tags
+        };
+
+        await fetch('/api/projects', {
+            method: 'PUT',
+            body: JSON.stringify(formattedData)
+        });
+        setEditingId(null);
+        fetchProjects();
+        onSuccess();
+    };
+
     return (
         <div>
             <div className={styles.grid}>
                 {projects.map((p) => (
                     <div key={p._id} className={styles.miniCard}>
                         <div className={styles.miniCardActions}>
+                            {editingId === p._id ? (
+                                <button className={styles.iconBtn} onClick={() => setEditingId(null)}><X size={16} /></button>
+                            ) : (
+                                <button className={styles.iconBtn} onClick={() => startEdit(p)}><Edit2 size={16} /></button>
+                            )}
                             <button className={styles.iconBtn} onClick={() => deleteProject(p._id)}><Trash2 size={16} /></button>
                         </div>
-                        <h4 style={{ marginBottom: 8 }}>{p.title}</h4>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{p.description?.substring(0, 40)}...</p>
+
+                        <div style={{ width: '100%', aspectRatio: '16/9', background: '#111', borderRadius: 8, marginBottom: 16, backgroundImage: `url(${p.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+
+                        {editingId === p._id ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <input
+                                    className={styles.input}
+                                    style={{ padding: '6px 10px', fontSize: '0.9rem' }}
+                                    placeholder="Project Title"
+                                    value={editData.title || ''}
+                                    onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                                />
+                                <textarea
+                                    className={styles.textarea}
+                                    style={{ padding: '6px 10px', fontSize: '0.9rem', minHeight: '60px' }}
+                                    placeholder="Description"
+                                    value={editData.description || ''}
+                                    onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                                />
+                                <input
+                                    className={styles.input}
+                                    style={{ padding: '6px 10px', fontSize: '0.9rem' }}
+                                    placeholder="Tags (comma separated)"
+                                    value={editData.tags || ''}
+                                    onChange={(e) => setEditData({ ...editData, tags: e.target.value })}
+                                />
+                                <div style={{ display: 'flex', gap: '8px' }}>
+                                    <input
+                                        className={styles.input}
+                                        style={{ padding: '6px 10px', fontSize: '0.9rem', flex: 1 }}
+                                        placeholder="Live Link"
+                                        value={editData.link || ''}
+                                        onChange={(e) => setEditData({ ...editData, link: e.target.value })}
+                                    />
+                                    <input
+                                        className={styles.input}
+                                        style={{ padding: '6px 10px', fontSize: '0.9rem', flex: 1 }}
+                                        placeholder="GitHub Link"
+                                        value={editData.github || ''}
+                                        onChange={(e) => setEditData({ ...editData, github: e.target.value })}
+                                    />
+                                </div>
+                                <button className={styles.saveBtn} style={{ padding: '6px 12px', fontSize: '0.9rem', marginTop: '8px' }} onClick={saveEdit}>Save Changes</button>
+                            </div>
+                        ) : (
+                            <>
+                                <h4 style={{ marginBottom: 8 }}>{p.title}</h4>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{p.description?.substring(0, 60)}{p.description?.length > 60 ? '...' : ''}</p>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '12px' }}>
+                                    {p.tags?.map((t: string, idx: number) => (
+                                        <span key={idx} style={{ padding: '2px 6px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '0.7rem' }}>{t}</span>
+                                    ))}
+                                </div>
+                            </>
+                        )}
                     </div>
                 ))}
                 <label className={styles.addBtn} style={{ cursor: isUploading ? 'not-allowed' : 'pointer', opacity: isUploading ? 0.7 : 1 }}>
