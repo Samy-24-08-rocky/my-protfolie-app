@@ -166,7 +166,7 @@ const OverviewTab = () => {
             </div>
             <div className={styles.card}>
                 <h3>Database Connect</h3>
-                <p style={{ color: '#00ff00', fontSize: '1.2rem', fontWeight: 600 }}>CONNECTED (LOCAL JSON)</p>
+                <p style={{ color: '#00ff00', fontSize: '1.2rem', fontWeight: 600 }}>CONNECTED (MONGODB ATLAS)</p>
                 <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', marginTop: '12px' }}>
                     <div style={{ width: '100%', height: '100%', background: 'var(--primary)', borderRadius: '2px' }} />
                 </div>

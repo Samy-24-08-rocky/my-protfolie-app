@@ -21,6 +21,15 @@ const SettingsSchema = new mongoose.Schema({
     value: { type: mongoose.Schema.Types.Mixed, required: true },
 }, { timestamps: true });
 
+const MessageSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    mobile: { type: String },
+    subject: { type: String, required: true },
+    message: { type: String, required: true },
+}, { timestamps: true });
+
 export const Project = mongoose.models.Project || mongoose.model('Project', ProjectSchema);
 export const GalleryItem = mongoose.models.GalleryItem || mongoose.model('GalleryItem', GallerySchema);
 export const Settings = mongoose.models.Settings || mongoose.model('Settings', SettingsSchema);
+export const Message = mongoose.models.Message || mongoose.model('Message', MessageSchema);

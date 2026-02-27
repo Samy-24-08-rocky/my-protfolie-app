@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
-import { readDb, writeDb } from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
+import { Project, GalleryItem } from '@/lib/models';
 import { revalidatePath } from 'next/cache';
 
 export async function POST(request: Request) {
     try {
         const { action } = await request.json();
+        await dbConnect();
 
         if (action === 'clear-cache') {
             revalidatePath('/');
@@ -13,72 +15,73 @@ export async function POST(request: Request) {
         }
 
         if (action === 'find-duplicates') {
-            const db = await readDb();
+            const projects = await Project.find({});
+            const gallery = await GalleryItem.find({});
+
             const duplicates = {
                 projects: [] as any[],
                 gallery: [] as any[]
             };
 
-            // Check projects for duplicate titles or images
             const projectTitles = new Set();
             const projectImages = new Set();
-            db.projects.forEach((p: any) => {
-                if (projectTitles.has(p.title) || projectImages.has(p.image)) {
+            projects.forEach((p: any) => {
+                if (projectTitles.has(p.title) || (p.image && projectImages.has(p.image))) {
                     duplicates.projects.push(p);
                 }
                 projectTitles.add(p.title);
-                projectImages.add(p.image);
+                if (p.image) projectImages.add(p.image);
             });
 
-            // Check gallery for duplicate titles or sources
             const galleryTitles = new Set();
             const gallerySrcs = new Set();
-            db.gallery.forEach((g: any) => {
-                if (galleryTitles.has(g.title) || gallerySrcs.has(g.src)) {
+            gallery.forEach((g: any) => {
+                if (galleryTitles.has(g.title) || (g.src && gallerySrcs.has(g.src))) {
                     duplicates.gallery.push(g);
                 }
                 galleryTitles.add(g.title);
-                gallerySrcs.add(g.src);
+                if (g.src) gallerySrcs.add(g.src);
             });
 
             return NextResponse.json({ duplicates });
         }
 
         if (action === 'delete-duplicates') {
-            const db = await readDb();
+            const projects = await Project.find({}).sort({ createdAt: 1 });
+            const gallery = await GalleryItem.find({}).sort({ createdAt: 1 });
 
-            // Remove duplicates from projects (keep first occurrence)
+            let removedProjects = 0;
             const seenProjectTitles = new Set();
             const seenProjectImages = new Set();
-            const originalProjectCount = db.projects.length;
-            db.projects = db.projects.filter((p: any) => {
-                if (seenProjectTitles.has(p.title) || seenProjectImages.has(p.image)) {
-                    return false;
-                }
-                seenProjectTitles.add(p.title);
-                seenProjectImages.add(p.image);
-                return true;
-            });
 
-            // Remove duplicates from gallery
+            for (const p of projects) {
+                if (seenProjectTitles.has(p.title) || (p.image && seenProjectImages.has(p.image))) {
+                    await Project.findByIdAndDelete(p._id);
+                    removedProjects++;
+                } else {
+                    seenProjectTitles.add(p.title);
+                    if (p.image) seenProjectImages.add(p.image);
+                }
+            }
+
+            let removedGallery = 0;
             const seenGalleryTitles = new Set();
             const seenGallerySrcs = new Set();
-            const originalGalleryCount = db.gallery.length;
-            db.gallery = db.gallery.filter((g: any) => {
-                if (seenGalleryTitles.has(g.title) || seenGallerySrcs.has(g.src)) {
-                    return false;
-                }
-                seenGalleryTitles.add(g.title);
-                seenGallerySrcs.add(g.src);
-                return true;
-            });
 
-            await writeDb(db);
+            for (const g of gallery) {
+                if (seenGalleryTitles.has(g.title) || (g.src && seenGallerySrcs.has(g.src))) {
+                    await GalleryItem.findByIdAndDelete(g._id);
+                    removedGallery++;
+                } else {
+                    seenGalleryTitles.add(g.title);
+                    if (g.src) seenGallerySrcs.add(g.src);
+                }
+            }
 
             return NextResponse.json({
                 message: 'Duplicates deleted',
-                removedProjects: originalProjectCount - db.projects.length,
-                removedGallery: originalGalleryCount - db.gallery.length
+                removedProjects,
+                removedGallery
             });
         }
 

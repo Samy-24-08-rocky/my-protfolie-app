@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
-import { readDb, writeDb } from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
+import { Project } from '@/lib/models';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {
-        const db = await readDb();
-        const projects = db.projects || [];
-        return NextResponse.json(projects);
+        await dbConnect();
+        const items = await Project.find({}).sort({ createdAt: -1 });
+        return NextResponse.json(items);
     } catch (error) {
         return NextResponse.json([]);
     }
@@ -16,18 +17,25 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        const db = await readDb();
+        await dbConnect();
+        const newItem = await Project.create(data);
+        return NextResponse.json(newItem);
+    } catch (error) {
+        return NextResponse.json({ error: 'Failed' }, { status: 500 });
+    }
+}
 
-        const newProject = {
-            ...data,
-            _id: Date.now().toString(), // Offline unique ID
-            createdAt: new Date().toISOString()
-        };
+export async function PUT(request: Request) {
+    try {
+        const data = await request.json();
+        const { _id, ...updateData } = data;
+        await dbConnect();
 
-        db.projects.push(newProject);
-        await writeDb(db);
-
-        return NextResponse.json(newProject);
+        const updatedItem = await Project.findByIdAndUpdate(_id, updateData, { new: true });
+        if (updatedItem) {
+            return NextResponse.json(updatedItem);
+        }
+        return NextResponse.json({ error: 'Not Found' }, { status: 404 });
     } catch (error) {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
@@ -37,11 +45,8 @@ export async function DELETE(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
-
-        const db = await readDb();
-        db.projects = db.projects.filter((p: any) => p._id !== id);
-        await writeDb(db);
-
+        await dbConnect();
+        await Project.findByIdAndDelete(id);
         return NextResponse.json({ success: true });
     } catch (error) {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
