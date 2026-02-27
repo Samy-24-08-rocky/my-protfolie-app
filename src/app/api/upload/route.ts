@@ -26,7 +26,9 @@ export async function POST(request: Request) {
             cloudinary.uploader.upload_stream(
                 {
                     resource_type: 'auto',
-                    folder: 'portfolio_uploads'
+                    folder: 'portfolio_uploads',
+                    timeout: 600000, // 10 minutes for slow network/large video files
+                    chunk_size: 6000000 // 6MB chunks for massive files
                 },
                 (error, result) => {
                     if (error) {
@@ -41,8 +43,11 @@ export async function POST(request: Request) {
         // Return the result containing the secure URL
         return NextResponse.json(uploadResult);
 
-    } catch (error) {
-        console.error('Upload error:', error);
-        return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    } catch (error: any) {
+        console.error('Upload error deep dive:', error);
+        return NextResponse.json({
+            error: 'Upload failed',
+            details: error?.message || error?.toString() || JSON.stringify(error)
+        }, { status: 500 });
     }
 }

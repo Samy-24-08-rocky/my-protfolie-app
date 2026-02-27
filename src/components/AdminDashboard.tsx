@@ -290,11 +290,11 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
                 onSuccess();
             } else {
                 console.error("Upload server error:", uploadData);
-                alert("Failed to upload image. Please check if your API Secret is filled out in .env.local");
+                alert("Failed to upload image. Server says: " + (uploadData.details || uploadData.error || "Unknown Error"));
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Upload failed", error);
-            alert("Failed to upload image.");
+            alert("Network error: Failed to upload image. (Your file might be too large for a single upload). Detail: " + (error?.message || error));
         } finally {
             setIsUploading(false);
         }
@@ -381,11 +381,11 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
                 onSuccess();
             } else {
                 console.error("Upload server error:", uploadData);
-                alert("Failed to upload media. Please check if your API Secret is filled out in .env.local");
+                alert("Failed to upload media. Server says: " + (uploadData.details || uploadData.error || "Unknown Error"));
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Upload failed", error);
-            alert("Failed to upload media.");
+            alert("Network error: Failed to upload media. (Your file might be too large for a single upload). Detail: " + (error?.message || error));
         } finally {
             setIsUploading(false);
         }
