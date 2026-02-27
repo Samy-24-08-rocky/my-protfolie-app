@@ -121,11 +121,7 @@ const Projects = () => {
                                     No Image Available
                                 </div>
                             )}
-                            <div className={styles.overlay}>
-                                <div className={styles.overlayContent}>
-                                    <p>View Details</p>
-                                </div>
-                            </div>
+
                         </a>
                         <div className={styles.projectContent}>
                             <h3 className={styles.projectTitle}>{project.title}</h3>
@@ -149,11 +145,7 @@ const Projects = () => {
                                     ))}
                                 </div>
                                 <div className={styles.linkGroup}>
-                                    <Magnetic>
-                                        <a href={formatUrl(project.github)} target={project.github && project.github !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.github || project.github === "#") { e.preventDefault(); alert("GitHub link not available for this project yet."); } }}>
-                                            <Github size={20} />
-                                        </a>
-                                    </Magnetic>
+
                                     <Magnetic>
                                         <a href={formatUrl(project.link)} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
                                             <ExternalLink size={20} />
