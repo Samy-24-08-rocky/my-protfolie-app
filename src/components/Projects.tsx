@@ -61,6 +61,15 @@ const Projects = () => {
 
         fetchProjectsData();
     }, []);
+
+    const formatUrl = (url?: string) => {
+        if (!url || url === "#") return "#";
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            return `https://${url}`;
+        }
+        return url;
+    };
+
     return (
         <section id="projects" className={styles.projectsSection}>
             <div style={{ textAlign: "center", marginBottom: "60px" }}>
@@ -86,7 +95,7 @@ const Projects = () => {
                         transition={{ delay: index * 0.1 }}
                         className={`glass-card ${styles.projectCard}`}
                     >
-                        <a href={project.link && project.link !== "#" ? project.link : "#"} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.imageWrapper} style={{ display: "block" }} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
+                        <a href={formatUrl(project.link)} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.imageWrapper} style={{ display: "block" }} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
                             {project.image ? (
                                 project.image.includes('res.cloudinary.com') ? (
                                     <CldImage
@@ -141,12 +150,12 @@ const Projects = () => {
                                 </div>
                                 <div className={styles.linkGroup}>
                                     <Magnetic>
-                                        <a href={project.github || "#"} target={project.github && project.github !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.github || project.github === "#") { e.preventDefault(); alert("GitHub link not available for this project yet."); } }}>
+                                        <a href={formatUrl(project.github)} target={project.github && project.github !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.github || project.github === "#") { e.preventDefault(); alert("GitHub link not available for this project yet."); } }}>
                                             <Github size={20} />
                                         </a>
                                     </Magnetic>
                                     <Magnetic>
-                                        <a href={project.link || "#"} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
+                                        <a href={formatUrl(project.link)} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
                                             <ExternalLink size={20} />
                                         </a>
                                     </Magnetic>
