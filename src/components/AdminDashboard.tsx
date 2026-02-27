@@ -447,8 +447,10 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
                             )}
                             <button className={styles.iconBtn} onClick={() => deleteItem(i._id)}><Trash2 size={16} /></button>
                         </div>
-                        <div style={{ width: '100%', aspectRatio: '16/9', background: '#111', borderRadius: 8, marginBottom: 12, backgroundImage: i.type === 'image' ? `url(${i.src})` : 'none', backgroundSize: 'cover', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {i.type === 'video' && <span style={{ color: 'var(--primary)' }}>[Video File]</span>}
+                        <div style={{ width: '100%', aspectRatio: '16/9', background: '#111', borderRadius: 8, marginBottom: 12, backgroundImage: i.type === 'image' ? `url(${i.src})` : 'none', backgroundSize: 'cover', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                            {i.type === 'video' && (
+                                <video src={i.src} controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            )}
                         </div>
 
                         {editingId === i._id ? (
