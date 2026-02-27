@@ -8,46 +8,29 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function POST(request: Request) {
+export async function GET() {
     try {
-        const formData = await request.formData();
-        const file = formData.get('file') as File | null;
+        const timestamp = Math.round(new Date().getTime() / 1000);
 
-        if (!file) {
-            return NextResponse.json({ error: 'No file provided' }, { status: 400 });
-        }
+        // Parameters that need to be signed
+        const paramsToSign = {
+            timestamp,
+            folder: 'portfolio_uploads'
+        };
 
-        // Convert file to buffer for Cloudinary SDK
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+        const signature = cloudinary.utils.api_sign_request(
+            paramsToSign,
+            process.env.CLOUDINARY_API_SECRET as string
+        );
 
-        // Upload using a Promise so we can await it
-        const uploadResult: any = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream(
-                {
-                    resource_type: 'auto',
-                    folder: 'portfolio_uploads',
-                    timeout: 600000, // 10 minutes for slow network/large video files
-                    chunk_size: 6000000 // 6MB chunks for massive files
-                },
-                (error, result) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(result);
-                    }
-                }
-            ).end(buffer);
-        });
-
-        // Return the result containing the secure URL
-        return NextResponse.json(uploadResult);
-
-    } catch (error: any) {
-        console.error('Upload error deep dive:', error);
         return NextResponse.json({
-            error: 'Upload failed',
-            details: error?.message || error?.toString() || JSON.stringify(error)
-        }, { status: 500 });
+            signature,
+            timestamp,
+            cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+            apiKey: process.env.CLOUDINARY_API_KEY
+        });
+    } catch (error: any) {
+        console.error('Signature generation error:', error);
+        return NextResponse.json({ error: 'Signature failed', details: error?.message }, { status: 500 });
     }
 }

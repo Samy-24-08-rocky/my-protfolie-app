@@ -264,11 +264,23 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
         if (!file) return;
 
         setIsUploading(true);
-        const formData = new FormData();
-        formData.append('file', file);
 
         try {
-            const uploadRes = await fetch('/api/upload', {
+            // 1. Get signature securely from our custom endpoint
+            const signRes = await fetch('/api/upload');
+            const signData = await signRes.json();
+
+            if (signData.error) throw new Error(signData.error);
+
+            // 2. Upload straight from user's browser direct to Cloudinary 
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('api_key', signData.apiKey);
+            formData.append('timestamp', signData.timestamp.toString());
+            formData.append('signature', signData.signature);
+            formData.append('folder', 'portfolio_uploads');
+
+            const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${signData.cloudName}/auto/upload`, {
                 method: 'POST',
                 body: formData
             });
@@ -355,11 +367,21 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
         if (!file) return;
 
         setIsUploading(true);
-        const formData = new FormData();
-        formData.append('file', file);
 
         try {
-            const uploadRes = await fetch('/api/upload', {
+            const signRes = await fetch('/api/upload');
+            const signData = await signRes.json();
+
+            if (signData.error) throw new Error(signData.error);
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('api_key', signData.apiKey);
+            formData.append('timestamp', signData.timestamp.toString());
+            formData.append('signature', signData.signature);
+            formData.append('folder', 'portfolio_uploads');
+
+            const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${signData.cloudName}/auto/upload`, {
                 method: 'POST',
                 body: formData
             });
