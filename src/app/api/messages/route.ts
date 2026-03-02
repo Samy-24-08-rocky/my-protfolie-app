@@ -9,7 +9,7 @@ export async function GET() {
         await dbConnect();
         const messages = await Message.find({}).sort({ createdAt: -1 });
         return NextResponse.json(messages);
-    } catch (error) {
+    } catch {
         return NextResponse.json([]);
     }
 }
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         await dbConnect();
         const newMessage = await Message.create(data);
         return NextResponse.json(newMessage);
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
@@ -32,7 +32,7 @@ export async function DELETE(request: Request) {
         await dbConnect();
         await Message.findByIdAndDelete(id);
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }

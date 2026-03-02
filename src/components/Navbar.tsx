@@ -63,9 +63,9 @@ const Navbar = () => {
                 <Magnetic>
                     <Link href="/" className={styles.logo}>
                         <div className={styles.logoIcon}>
-                            <Code2 size={24} color="white" />
+                            <img src="/logo.png" alt="Gill Tech Solutions India" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
                         </div>
-                        <span>{brandName}</span>
+                        <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Gill Tech Solutions India</span>
                     </Link>
                 </Magnetic>
 

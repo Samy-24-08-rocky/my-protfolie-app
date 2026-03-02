@@ -9,7 +9,7 @@ export async function GET() {
         await dbConnect();
         const items = await Project.find({}).sort({ createdAt: -1 });
         return NextResponse.json(items);
-    } catch (error) {
+    } catch {
         return NextResponse.json([]);
     }
 }
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         await dbConnect();
         const newItem = await Project.create(data);
         return NextResponse.json(newItem);
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
@@ -36,7 +36,7 @@ export async function PUT(request: Request) {
             return NextResponse.json(updatedItem);
         }
         return NextResponse.json({ error: 'Not Found' }, { status: 404 });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
@@ -48,7 +48,7 @@ export async function DELETE(request: Request) {
         await dbConnect();
         await Project.findByIdAndDelete(id);
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }

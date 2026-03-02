@@ -50,11 +50,11 @@ const Footer = () => {
                 {/* Main Footer Content */}
                 <div className={styles.mainGrid}>
                     <div className={styles.brandCol}>
-                        <h3>
+                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
                             <div className={styles.brandIcon}>
-                                <Code2 size={20} color="white" />
+                                <img src="/logo.png" alt="Gill Tech Solutions India" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
                             </div>
-                            <span>SUMIT GILL</span>
+                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Gill Tech Solutions India</span>
                         </h3>
                         <p className={styles.brandDesc}>
                             A dedicated software developer crafting high-performance,
@@ -79,7 +79,6 @@ const Footer = () => {
                                 <a
                                     href="mailto:contact@gilltechsolutionsindia.info"
                                     className={styles.navLink}
-                                    style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         navigator.clipboard.writeText("contact@gilltechsolutionsindia.info");
@@ -90,12 +89,12 @@ const Footer = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="tel:+918264888290" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                <a href="tel:+918264888290" className={styles.navLink}>
                                     <Phone size={16} /> +91 82648 88290
                                 </a>
                             </li>
                             <li>
-                                <a href="https://wa.me/918264888290" target="_blank" rel="noreferrer" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                <a href="https://wa.me/918264888290" target="_blank" rel="noopener noreferrer" className={styles.navLink}>
                                     <MessageCircle size={16} /> WhatsApp
                                 </a>
                             </li>
@@ -108,8 +107,8 @@ const Footer = () => {
                     <div className={styles.navCol}>
                         <h4>Socials</h4>
                         <div className={styles.socialGrid}>
-                            <a href="https://instagram.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
-                            <a href="https://facebook.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
                             <a href="mailto:contact@gilltechsolutionsindia.info" className={styles.socialIcon}><Mail size={20} /></a>
                         </div>
                     </div>
