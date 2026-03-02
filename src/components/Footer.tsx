@@ -76,7 +76,16 @@ const Footer = () => {
                         <h4>Contact Info</h4>
                         <ul className={styles.navLinks}>
                             <li>
-                                <a href="mailto:contact@gilltechsolutionsindia.info" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                <a
+                                    href="mailto:contact@gilltechsolutionsindia.info"
+                                    className={styles.navLink}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        navigator.clipboard.writeText("contact@gilltechsolutionsindia.info");
+                                        alert("Email address copied to clipboard!");
+                                    }}
+                                >
                                     <Mail size={16} />contact@gilltechsolutionsindia.info
                                 </a>
                             </li>

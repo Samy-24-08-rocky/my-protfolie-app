@@ -38,7 +38,18 @@ const Contact = () => {
                                 transition={{ delay: i * 0.1 }}
                             >
                                 {item.href ? (
-                                    <a href={item.href} className={styles.contactItem} style={{ textDecoration: "none", color: "inherit" }}>
+                                    <a
+                                        href={item.href}
+                                        className={styles.contactItem}
+                                        style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+                                        onClick={(e) => {
+                                            if (item.label === "Email Me") {
+                                                e.preventDefault();
+                                                navigator.clipboard.writeText(item.value);
+                                                alert("Email address copied to clipboard!");
+                                            }
+                                        }}
+                                    >
                                         <div className={styles.iconBox}>{item.icon}</div>
                                         <div>
                                             <p style={{ margin: 0, fontSize: "0.8rem" }}>{item.label}</p>
