@@ -76,8 +76,8 @@ const Footer = () => {
                         <h4>Contact Info</h4>
                         <ul className={styles.navLinks}>
                             <li>
-                                <a href="mailto:sumitgill375@gmail.com" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
-                                    <Mail size={16} /> sumitgill375@gmail.com
+                                <a href="mailto:contact@gilltechsolutionsindia.info" className={styles.navLink} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                                    <Mail size={16} />contact@gilltechsolutionsindia.info
                                 </a>
                             </li>
                             <li>
@@ -99,12 +99,9 @@ const Footer = () => {
                     <div className={styles.navCol}>
                         <h4>Socials</h4>
                         <div className={styles.socialGrid}>
-                            <a href="https://github.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Github size={20} /></a>
-                            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Linkedin size={20} /></a>
-                            <a href="https://twitter.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Twitter size={20} /></a>
                             <a href="https://instagram.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
                             <a href="https://facebook.com" target="_blank" rel="noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
-                            <a href="mailto:sumitgill375@gmail.com" className={styles.socialIcon}><Mail size={20} /></a>
+                            <a href="mailto:contact@gilltechsolutionsindia.info" className={styles.socialIcon}><Mail size={20} /></a>
                         </div>
                     </div>
                 </div>

@@ -25,7 +25,7 @@ const Contact = () => {
 
                     <div className={styles.contactList}>
                         {[
-                            { icon: <Mail size={20} />, label: "Email Me", value: "sumitgill375@gmail.com", href: "mailto:sumitgill375@gmail.com" },
+                            { icon: <Mail size={20} />, label: "Email Me", value: "contact@gilltechsolutionsindia.info", href: "mailto:contact@gilltechsolutionsindia.info" },
                             { icon: <Facebook size={20} />, label: "Facebook", value: "Sumit Gill", href: "https://facebook.com" },
                             { icon: <Phone size={20} />, label: "Call Me", value: "+91 82648 88290", href: "tel:+918264888290" },
                             { icon: <MessageCircle size={20} />, label: "WhatsApp", value: "+91 82648 88290", href: "https://wa.me/918264888290" },
