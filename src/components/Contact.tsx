@@ -44,19 +44,6 @@ const Contact = () => {
                                         href={item.href}
                                         className={styles.contactItem}
                                         style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
-                                        onClick={async (e) => {
-                                            if (item.label === "Email Me") {
-                                                if (navigator.clipboard && window.isSecureContext) {
-                                                    e.preventDefault();
-                                                    try {
-                                                        await navigator.clipboard.writeText(item.value);
-                                                        showToast("Email copied to clipboard!", "success");
-                                                    } catch (err) {
-                                                        console.error("Failed to copy:", err);
-                                                    }
-                                                }
-                                            }
-                                        }}
                                     >
                                         <div className={styles.iconBox}>{item.icon}</div>
                                         <div>

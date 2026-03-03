@@ -81,17 +81,6 @@ const Footer = () => {
                                 <a
                                     href="mailto:contact@gilltechsolutionsindia.info"
                                     className={styles.navLink}
-                                    onClick={async (e) => {
-                                        if (navigator.clipboard && window.isSecureContext) {
-                                            e.preventDefault();
-                                            try {
-                                                await navigator.clipboard.writeText("contact@gilltechsolutionsindia.info");
-                                                showToast("Email copied to clipboard!", "success");
-                                            } catch (err) {
-                                                console.error("Failed to copy:", err);
-                                            }
-                                        }
-                                    }}
                                 >
                                     <Mail size={16} />contact@gilltechsolutionsindia.info
                                 </a>
