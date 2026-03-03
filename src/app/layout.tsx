@@ -3,6 +3,7 @@ import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ToastProvider } from "@/components/Toast";
 
 export const metadata: Metadata = {
   title: "Sumit Gill | Professional Software Developer & UI/UX Expert",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sumit Gill | Software Developer",
     description: "I build exceptional and accessible digital experiences for the web and mobile.",
-    url: "https://sumitgill.dev", // Replace with your real URL when deployed
+    url: "https://sumitgill.dev",
     siteName: "Sumit Gill Portfolio",
     type: "website",
   },
@@ -37,9 +38,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
-          <CustomCursor />
-          <ScrollProgress />
-          {children}
+          <ToastProvider>
+            <CustomCursor />
+            <ScrollProgress />
+            {children}
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

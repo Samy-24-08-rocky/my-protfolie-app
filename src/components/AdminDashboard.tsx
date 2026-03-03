@@ -242,6 +242,7 @@ const BrandingTab = ({ onSuccess }: { onSuccess: () => void }) => {
 const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
     const [projects, setProjects] = useState<any[]>([]);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editData, setEditData] = useState<any>({});
 
@@ -266,6 +267,7 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
         if (!file) return;
 
         setIsUploading(true);
+        setUploadProgress(0);
 
         try {
             // 1. Get signature securely from our custom endpoint
@@ -282,11 +284,28 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
             formData.append('signature', signData.signature);
             formData.append('folder', 'portfolio_uploads');
 
-            const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${signData.cloudName}/auto/upload`, {
-                method: 'POST',
-                body: formData
+            const uploadData = await new Promise<any>((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', `https://api.cloudinary.com/v1_1/${signData.cloudName}/auto/upload`);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = Math.round((event.loaded / event.total) * 100);
+                        setUploadProgress(percentComplete);
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(new Error(xhr.responseText));
+                    }
+                };
+
+                xhr.onerror = () => reject(new Error('Network error'));
+                xhr.send(formData);
             });
-            const uploadData = await uploadRes.json();
 
             if (uploadData.secure_url) {
                 const newProject = {
@@ -414,7 +433,7 @@ const ProjectsTab = ({ onSuccess }: { onSuccess: () => void }) => {
                 <label className={styles.addBtn} style={{ cursor: isUploading ? 'not-allowed' : 'pointer', opacity: isUploading ? 0.7 : 1 }}>
                     <input type="file" accept="image/*" style={{ display: 'none' }} disabled={isUploading} onChange={handleImageUpload} />
                     {isUploading ? <RefreshCcw size={32} className={styles.spin} /> : <Plus size={32} />}
-                    <span>{isUploading ? "Uploading..." : "Add New Project"}</span>
+                    <span>{isUploading ? `Uploading... ${uploadProgress}%` : "Add New Project"}</span>
                 </label>
             </div>
         </div>
@@ -426,6 +445,7 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editData, setEditData] = useState<any>({});
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const fetchItems = async () => {
         try {
@@ -448,6 +468,7 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
         if (!file) return;
 
         setIsUploading(true);
+        setUploadProgress(0);
 
         try {
             const signRes = await fetch('/api/upload');
@@ -462,11 +483,28 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
             formData.append('signature', signData.signature);
             formData.append('folder', 'portfolio_uploads');
 
-            const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${signData.cloudName}/auto/upload`, {
-                method: 'POST',
-                body: formData
+            const uploadData = await new Promise<any>((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', `https://api.cloudinary.com/v1_1/${signData.cloudName}/auto/upload`);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = Math.round((event.loaded / event.total) * 100);
+                        setUploadProgress(percentComplete);
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(new Error(xhr.responseText));
+                    }
+                };
+
+                xhr.onerror = () => reject(new Error('Network error'));
+                xhr.send(formData);
             });
-            const uploadData = await uploadRes.json();
 
             if (uploadData.secure_url) {
                 const newItem = {
@@ -561,7 +599,7 @@ const GalleryTab = ({ onSuccess }: { onSuccess: () => void }) => {
                 <label className={styles.addBtn} style={{ cursor: isUploading ? 'not-allowed' : 'pointer', opacity: isUploading ? 0.7 : 1 }}>
                     <input type="file" accept="image/*,video/*" style={{ display: 'none' }} disabled={isUploading} onChange={handleMediaUpload} />
                     {isUploading ? <RefreshCcw size={32} className={styles.spin} /> : <Plus size={32} />}
-                    <span>{isUploading ? "Uploading Media..." : "Upload Media"}</span>
+                    <span>{isUploading ? `Uploading Media... ${uploadProgress}%` : "Upload Media"}</span>
                 </label>
             </div>
         </div>
@@ -621,7 +659,7 @@ const MessagesTab = ({ onSuccess }: { onSuccess: () => void }) => {
                             <div>
                                 <h3 style={{ fontSize: '1.2rem', margin: 0 }}>{m.subject}</h3>
                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                                    From: <strong>{m.name}</strong> ({m.email}{m.mobile ? ` / ${m.mobile}` : ''}) • {new Date(m.createdAt).toLocaleString()}
+                                    From: <strong>{m.name}</strong> (<a href={`mailto:${m.email}`} style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{m.email}</a>{m.mobile ? ` / ${m.mobile}` : ''}) • {new Date(m.createdAt).toLocaleString()}
                                 </p>
                             </div>
                             <div style={{ background: 'var(--surface)', padding: '16px', borderRadius: '8px', border: '1px solid var(--surface-border)' }}>

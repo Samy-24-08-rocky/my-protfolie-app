@@ -1,107 +1,267 @@
 .gallery {
-    padding: 100px 20px;
     max-width: 1200px;
-    margin: 0 auto;
 }
 
 .sectionHeader {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 48px;
 }
 
 .sectionTitle {
-    font-size: 3rem;
-    margin-bottom: 16px;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 12px;
 }
 
 .sectionSubtitle {
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    max-width: 550px;
+    margin: 0 auto;
 }
 
+/* Filter pills */
+.filterRow {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.filterBtn {
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--surface-border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+}
+
+.filterBtn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filterBtnActive {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-color: transparent;
+    color: #fff !important;
+    box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+/* Grid */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
+/* Item card */
 .item {
     position: relative;
-    border-radius: 24px;
+    border-radius: 16px;
     overflow: hidden;
-    aspect-ratio: 16/10;
-    cursor: pointer;
     background: var(--surface);
     border: 1px solid var(--surface-border);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.item:hover .hoverOverlay {
+    opacity: 1;
 }
 
 .mediaWrapper {
     width: 100%;
-    height: 100%;
-    position: relative;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--placeholder-bg);
 }
 
-.item:hover .mediaWrapper {
-    transform: scale(1.05);
-}
-
-.overlay {
+.hoverOverlay {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 48px;
+    background: rgba(0, 0, 0, 0.55);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 24px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.item:hover .overlay {
-    opacity: 1;
-}
-
-.itemTitle {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 4px;
-}
-
-.itemCategory {
-    font-size: 0.875rem;
-    color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    transition: opacity 0.25s ease;
+    color: #fff;
+    z-index: 2;
     font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(4px);
 }
 
 .videoIcon {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(0, 242, 255, 0.2);
-    backdrop-filter: blur(8px);
-    width: 40px;
-    height: 40px;
+    top: 12px;
+    left: 12px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #fff;
+    z-index: 3;
+    backdrop-filter: blur(4px);
+}
+
+.itemMeta {
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.itemTitle {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.itemCat {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--primary-glow);
     color: var(--primary);
-    border: 1px solid var(--primary-glow);
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    backdrop-filter: blur(12px);
+}
+
+.lightboxContent {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+}
+
+.lightboxMedia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.lightboxClose {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
     z-index: 2;
-    pointer-events: none;
+    transition: background 0.2s;
+}
+
+.lightboxClose:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lightboxNav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    z-index: 2;
+    transition: background 0.2s;
+}
+
+.lightboxNav:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lightboxPrev {
+    left: -56px;
+}
+
+.lightboxNext {
+    right: -56px;
+}
+
+.lightboxInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+}
+
+.lightboxCount {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 @media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
+    .lightboxPrev {
+        left: 4px;
     }
 
-    .overlay {
-        opacity: 1;
+    .lightboxNext {
+        right: 4px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
     }
 }

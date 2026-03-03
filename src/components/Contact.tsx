@@ -5,8 +5,10 @@ import { Mail, Phone, MapPin, Send, MessageCircle, Facebook } from "lucide-react
 import styles from "./Contact.module.css";
 import { Reveal } from "./Reveal";
 import Magnetic from "./Magnetic";
+import { useToast } from "./Toast";
 
 const Contact = () => {
+    const { showToast } = useToast();
     return (
         <section id="contact">
             <div className={styles.contactContainer}>
@@ -42,11 +44,17 @@ const Contact = () => {
                                         href={item.href}
                                         className={styles.contactItem}
                                         style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
-                                        onClick={(e) => {
+                                        onClick={async (e) => {
                                             if (item.label === "Email Me") {
-                                                e.preventDefault();
-                                                navigator.clipboard.writeText(item.value);
-                                                alert("Email address copied to clipboard!");
+                                                if (navigator.clipboard && window.isSecureContext) {
+                                                    e.preventDefault();
+                                                    try {
+                                                        await navigator.clipboard.writeText(item.value);
+                                                        showToast("Email copied to clipboard!", "success");
+                                                    } catch (err) {
+                                                        console.error("Failed to copy:", err);
+                                                    }
+                                                }
                                             }
                                         }}
                                     >
@@ -95,14 +103,14 @@ const Contact = () => {
                             });
 
                             if (res.ok) {
-                                alert("Thank you! Your message has been sent successfully.");
+                                showToast("Message sent successfully! I'll get back to you soon. ✉️", "success");
                                 target.reset();
                             } else {
-                                alert("Failed to send message. Please try again.");
+                                showToast("Failed to send message. Please try again.", "error");
                             }
                         } catch (error) {
                             console.error("Message send error:", error);
-                            alert("Something went wrong. Please check your connection.");
+                            showToast("Something went wrong. Please check your internet connection.", "error");
                         } finally {
                             submitBtn.innerHTML = originalText;
                             submitBtn.disabled = false;

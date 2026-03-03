@@ -1,32 +1,109 @@
 .aboutContainer {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
 }
 
 .aboutContent {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .title {
-    font-size: 3.5rem;
-    margin-bottom: 32px;
-    letter-spacing: -0.02em;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
 }
 
 .description {
+    font-size: 1.05rem;
     color: var(--text-muted);
-    font-size: 1.2rem;
     line-height: 1.8;
-    margin-bottom: 0;
+    margin: 0;
+}
+
+.techStack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.techBadge {
+    padding: 6px 14px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+.techBadge:hover {
+    background: var(--primary-glow);
+    transform: translateY(-2px);
+}
+
+/* Stats grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.statCard {
+    padding: 28px 20px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.statCard:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 24px var(--primary-glow);
+    transform: translateY(-4px);
+}
+
+.statIcon {
+    color: var(--primary);
+    opacity: 0.8;
+}
+
+.statNumber {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
 }
 
 @media (max-width: 768px) {
-    .title {
-        font-size: 2.5rem;
+    .aboutContainer {
+        grid-template-columns: 1fr;
+        gap: 40px;
     }
 
-    .description {
-        font-size: 1.1rem;
+    .statsGrid {
+        grid-template-columns: 1fr 1fr;
     }
 }

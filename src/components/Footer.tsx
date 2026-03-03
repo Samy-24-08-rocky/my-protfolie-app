@@ -16,9 +16,11 @@ import {
     Facebook
 } from "lucide-react";
 import styles from "./Footer.module.css";
+import { useToast } from "./Toast";
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const { showToast } = useToast();
 
     return (
         <footer className={styles.footer}>
@@ -79,10 +81,16 @@ const Footer = () => {
                                 <a
                                     href="mailto:contact@gilltechsolutionsindia.info"
                                     className={styles.navLink}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        navigator.clipboard.writeText("contact@gilltechsolutionsindia.info");
-                                        alert("Email address copied to clipboard!");
+                                    onClick={async (e) => {
+                                        if (navigator.clipboard && window.isSecureContext) {
+                                            e.preventDefault();
+                                            try {
+                                                await navigator.clipboard.writeText("contact@gilltechsolutionsindia.info");
+                                                showToast("Email copied to clipboard!", "success");
+                                            } catch (err) {
+                                                console.error("Failed to copy:", err);
+                                            }
+                                        }
                                     }}
                                 >
                                     <Mail size={16} />contact@gilltechsolutionsindia.info
