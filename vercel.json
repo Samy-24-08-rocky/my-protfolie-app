@@ -3,7 +3,7 @@
     "buildCommand": "npm run build",
     "outputDirectory": ".next",
     "installCommand": "npm install",
-    "nodeVersion": "22.x",
+    "nodeVersion": "24.x",
     "regions": [
         "iad1"
     ],
