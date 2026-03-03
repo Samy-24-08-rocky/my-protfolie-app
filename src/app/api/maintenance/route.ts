@@ -3,6 +3,8 @@ import dbConnect from '@/lib/mongodb';
 import { Project, GalleryItem } from '@/lib/models';
 import { revalidatePath } from 'next/cache';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
     try {
         const { action } = await request.json();
