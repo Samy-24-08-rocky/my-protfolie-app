@@ -123,13 +123,13 @@ const Contact = () => {
                             </div>
                             <div className={styles.field}>
                                 <label className={styles.label}>Email *</label>
-                                <input id="contact-email" name="email" type="email" className={styles.input} placeholder="you@example.com" required />
+                                <input id="contact-email" name="email" type="email" className={styles.input} placeholder="" required />
                             </div>
                         </div>
                         <div className={styles.row}>
                             <div className={styles.field}>
                                 <label className={styles.label}>Mobile</label>
-                                <input id="contact-mobile" name="mobile" type="tel" className={styles.input} placeholder="+91 XXXXX XXXXX" />
+                                <input id="contact-mobile" name="mobile" type="tel" className={styles.input} placeholder="+91" />
                             </div>
                             <div className={styles.field}>
                                 <label className={styles.label}>Subject *</label>
