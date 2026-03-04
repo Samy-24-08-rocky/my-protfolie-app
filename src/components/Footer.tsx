@@ -79,12 +79,12 @@ const Footer = () => {
                         <ul className={styles.navLinks}>
                             <li>
                                 <a
-                                    href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.info"
+                                    href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.com"
                                     className={styles.navLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <Mail size={16} />contact@gilltechsolutionsindia.info
+                                    <Mail size={16} />contact@gilltechsolutionsindia.com
                                 </a>
                             </li>
                             <li>
@@ -108,7 +108,7 @@ const Footer = () => {
                         <div className={styles.socialGrid}>
                             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
                             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.info" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Mail size={20} /></a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Mail size={20} /></a>
                         </div>
                     </div>
                 </div>

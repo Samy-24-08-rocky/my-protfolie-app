@@ -27,7 +27,7 @@ const Contact = () => {
 
                     <div className={styles.contactList}>
                         {[
-                            { icon: <Mail size={20} />, label: "Email Me", value: "contact@gilltechsolutionsindia.info", href: "https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.info" },
+                            { icon: <Mail size={20} />, label: "Email Me", value: "contact@gilltechsolutionsindia.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.com" },
                             { icon: <Facebook size={20} />, label: "Facebook", value: "Sumit Gill", href: "https://facebook.com" },
                             { icon: <Phone size={20} />, label: "Call Me", value: "+91 82648 88290", href: "tel:+918264888290" },
                             { icon: <MessageCircle size={20} />, label: "WhatsApp", value: "+91 82648 88290", href: "https://wa.me/918264888290" },
