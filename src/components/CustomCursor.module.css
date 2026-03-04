@@ -19,6 +19,7 @@
     height: 4px;
     background: var(--primary);
     border-radius: 50%;
+    pointer-events: none;
 }
 
 .hovering {
@@ -27,6 +28,7 @@
     background: rgba(255, 0, 0, 0.1);
     border-color: rgba(255, 0, 0, 0.5);
     backdrop-filter: blur(4px);
+    pointer-events: none;
 }
 
 @media (max-width: 768px) {
