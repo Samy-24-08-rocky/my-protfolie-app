@@ -54,9 +54,9 @@ const Footer = () => {
                     <div className={styles.brandCol}>
                         <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
                             <div className={styles.brandIcon}>
-                                <img src="/logo.png" alt="Gill Tech Solutions India" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
+                                <img src="/logo.png" alt="Logo" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
                             </div>
-                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Gill Tech Solutions India</span>
+                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Sumit Gill</span>
                         </h3>
                         <p className={styles.brandDesc}>
                             A dedicated software developer crafting high-performance,
@@ -79,12 +79,10 @@ const Footer = () => {
                         <ul className={styles.navLinks}>
                             <li>
                                 <a
-                                    href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.com"
+                                    href="mailto:your@email.com"
                                     className={styles.navLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
                                 >
-                                    <Mail size={16} />contact@gilltechsolutionsindia.com
+                                    <Mail size={16} />your@email.com
                                 </a>
                             </li>
                             <li>
@@ -108,7 +106,7 @@ const Footer = () => {
                         <div className={styles.socialGrid}>
                             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
                             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@gilltechsolutionsindia.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Mail size={20} /></a>
+                            <a href="mailto:your@email.com" className={styles.socialIcon}><Mail size={20} /></a>
                         </div>
                     </div>
                 </div>
