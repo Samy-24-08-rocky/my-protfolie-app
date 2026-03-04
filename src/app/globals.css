@@ -1,39 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --background: #f8fafc;
-  --surface: rgba(255, 255, 255, 0.7);
-  --surface-border: rgba(0, 0, 0, 0.1);
-  --primary: #0ea5e9;
-  /* Ocean Blue */
-  --primary-glow: rgba(14, 165, 233, 0.15);
-  --secondary: #8b5cf6;
-  /* Soft Purple */
-  --secondary-glow: rgba(139, 92, 246, 0.15);
-  --accent: #38bdf8;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --selection: rgba(14, 165, 233, 0.3);
+  --background: #f0f0f0;
+  --surface: rgba(255, 255, 255, 0.8);
+  --surface-border: rgba(0, 0, 0, 0.08);
+  --primary: #ff4d00;
+  --primary-glow: rgba(255, 77, 0, 0.12);
+  --secondary: #7c3aed;
+  --secondary-glow: rgba(124, 58, 237, 0.12);
+  --accent: #f97316;
+  --text-main: #0a0a0a;
+  --text-muted: #6b7280;
+  --selection: rgba(255, 77, 0, 0.25);
 
-  /* Component specific light vars */
-  --nav-bg: rgba(255, 255, 255, 0.85);
-  --nav-border: rgba(0, 0, 0, 0.1);
-  --mobile-bg: rgba(255, 255, 255, 0.98);
+  --nav-bg: rgba(240, 240, 240, 0.9);
+  --nav-border: rgba(0, 0, 0, 0.08);
+  --mobile-bg: rgba(248, 248, 248, 0.99);
 
-  --badge-bg: rgba(0, 0, 0, 0.05);
-  --badge-border: rgba(0, 0, 0, 0.05);
-  --btn-sec-bg: rgba(0, 0, 0, 0.05);
+  --badge-bg: rgba(255, 77, 0, 0.08);
+  --badge-border: rgba(255, 77, 0, 0.15);
+  --btn-sec-bg: rgba(0, 0, 0, 0.04);
   --btn-sec-border: rgba(0, 0, 0, 0.1);
   --btn-sec-hover: rgba(0, 0, 0, 0.08);
   --btn-sec-border-hover: rgba(0, 0, 0, 0.2);
 
-  --placeholder-bg: #e2e8f0;
+  --placeholder-bg: #e5e5e5;
   --input-bg: rgba(0, 0, 0, 0.03);
   --input-border: rgba(0, 0, 0, 0.1);
-  --input-focus: rgba(0, 0, 0, 0.05);
+  --input-focus: rgba(255, 77, 0, 0.08);
 
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Syne', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+
+  --tag-bg: rgba(255, 77, 0, 0.07);
+  --tag-color: var(--primary);
+  --card-radius: 20px;
 }
 
 * {
@@ -60,26 +61,10 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(circle at 20% 20%, var(--primary-glow) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, var(--secondary-glow) 0%, transparent 40%);
+    radial-gradient(ellipse at 15% 10%, var(--primary-glow) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 90%, var(--secondary-glow) 0%, transparent 50%);
   z-index: -2;
   pointer-events: none;
-  opacity: 0.5;
-}
-
-/* Grain Effect */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.2;
-  z-index: -1;
-  pointer-events: none;
-  filter: contrast(120%) brightness(120%);
 }
 
 a {
@@ -99,56 +84,73 @@ h6 {
 
 ::selection {
   background: var(--selection);
-  color: white;
+  color: var(--primary);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #ccc;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #aaa;
 }
 
 section {
-  padding: 100px 20px;
+  padding: 110px 24px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .glass-card {
   background: var(--surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--surface-border);
-  border-radius: 24px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: var(--card-radius);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
 }
 
 .glass-card:hover {
-  border-color: rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Hide Next.js Dev Indicator/Compilation Logo */
+/* section label */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+/* Hide Next.js dev badge */
 #nextjs-portal,
 .__next-devtools-badge {
   display: none !important;
@@ -156,49 +158,45 @@ section {
   pointer-events: none !important;
 }
 
-/* Dark Theme Variables */
+/* ── DARK THEME ── */
 [data-theme='dark'] {
-  --background: #030303;
-  --surface: rgba(255, 255, 255, 0.03);
-  --surface-border: rgba(255, 255, 255, 0.1);
-  --primary: #00f2ff;
-  --primary-glow: rgba(0, 242, 255, 0.3);
-  --secondary: #7000ff;
-  --secondary-glow: rgba(112, 0, 255, 0.3);
-  --accent: #00f2ff;
-  --text-main: #ffffff;
-  --text-muted: #94a3b8;
-  --selection: rgba(0, 242, 255, 0.3);
+  --background: #080808;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --primary: #ff6b35;
+  --primary-glow: rgba(255, 107, 53, 0.2);
+  --secondary: #a855f7;
+  --secondary-glow: rgba(168, 85, 247, 0.2);
+  --accent: #fb923c;
+  --text-main: #fafafa;
+  --text-muted: #9ca3af;
+  --selection: rgba(255, 107, 53, 0.3);
 
-  /* Component specific dark vars */
-  --nav-bg: rgba(0, 0, 0, 0.5);
-  --nav-border: rgba(255, 255, 255, 0.1);
-  --mobile-bg: rgba(10, 10, 11, 0.98);
+  --nav-bg: rgba(8, 8, 8, 0.85);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --mobile-bg: rgba(10, 10, 10, 0.99);
 
-  --badge-bg: rgba(255, 255, 255, 0.05);
-  --badge-border: rgba(255, 255, 255, 0.1);
+  --badge-bg: rgba(255, 107, 53, 0.1);
+  --badge-border: rgba(255, 107, 53, 0.2);
   --btn-sec-bg: rgba(255, 255, 255, 0.05);
   --btn-sec-border: rgba(255, 255, 255, 0.1);
   --btn-sec-hover: rgba(255, 255, 255, 0.08);
   --btn-sec-border-hover: rgba(255, 255, 255, 0.2);
 
-  --placeholder-bg: #111111;
-  --input-bg: rgba(255, 255, 255, 0.03);
+  --placeholder-bg: #1a1a1a;
+  --input-bg: rgba(255, 255, 255, 0.04);
   --input-border: rgba(255, 255, 255, 0.1);
-  --input-focus: rgba(255, 255, 255, 0.05);
-}
+  --input-focus: rgba(255, 107, 53, 0.1);
 
-[data-theme='dark'] body::after {
-  opacity: 0.05;
-  filter: contrast(150%) brightness(100%);
+  --tag-bg: rgba(255, 107, 53, 0.1);
 }
 
 [data-theme='dark'] ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: #2a2a2a;
 }
 
 [data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: #3a3a3a;
 }
 
 [data-theme='dark'] .glass-card {
@@ -206,6 +204,5 @@ section {
 }
 
 [data-theme='dark'] .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: none;
+  box-shadow: 0 0 40px rgba(255, 107, 53, 0.08);
 }

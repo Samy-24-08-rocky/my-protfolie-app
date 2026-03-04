@@ -1,75 +1,93 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Smartphone, Layout, Database } from "lucide-react";
+import { Layout, Smartphone, Server, Database, Globe, Layers } from "lucide-react";
 import styles from "./Skills.module.css";
 import { Reveal } from "./Reveal";
 
-const skillsData = [
+const SKILLS = [
     {
-        icon: <Layout size={32} />,
-        title: "Web Development",
-        description: "Building modern, responsive web applications with cutting-edge frameworks including Next.js and React.",
-        tags: ["React", "Next.js", "TypeScript", "Tailwind"]
+        icon: <Layout size={28} />,
+        title: "Frontend & Web",
+        desc: "Building pixel-perfect, responsive interfaces with React, Next.js, TypeScript and modern CSS.",
+        tags: ["React", "Next.js", "TypeScript", "CSS Modules", "Framer Motion"],
+        color: "#ff4d00",
     },
     {
-        icon: <Smartphone size={32} />,
-        title: "Mobile App Development",
-        description: "Creating high-performance native and cross-platform mobile apps for iOS and Android.",
-        tags: ["Flutter", "Java", "Android SDK"]
+        icon: <Smartphone size={28} />,
+        title: "Mobile Development",
+        desc: "Cross-platform iOS & Android apps with Flutter, plus native Android using Java & Kotlin.",
+        tags: ["Flutter", "Dart", "Java", "Android SDK", "Firebase"],
+        color: "#7c3aed",
     },
     {
-        icon: <Code2 size={32} />,
+        icon: <Server size={28} />,
         title: "Backend Engineering",
-        description: "Designing scalable server-side systems, microservices, and robust RESTful APIs.",
-        tags: ["Java", "Node.js", ".NET", "Firebase"]
+        desc: "Scalable REST APIs, microservices, and server-side solutions using Node.js, Java, and .NET.",
+        tags: ["Node.js", "Express", "Java Spring", ".NET Core", "REST APIs"],
+        color: "#0ea5e9",
     },
     {
-        icon: <Database size={32} />,
-        title: "Data Management",
-        description: "Architecting database schemas and ensuring data integrity with SQL and NoSQL solutions.",
-        tags: ["PostgreSQL", "MongoDB", "MySQL"]
-    }
+        icon: <Database size={28} />,
+        title: "Databases",
+        desc: "Designing and managing SQL & NoSQL databases with a focus on performance and data integrity.",
+        tags: ["MongoDB", "PostgreSQL", "MySQL", "Firebase Firestore"],
+        color: "#10b981",
+    },
+    {
+        icon: <Globe size={28} />,
+        title: "DevOps & Cloud",
+        desc: "Deploying and monitoring applications using cloud platforms, CI/CD pipelines and containers.",
+        tags: ["Vercel", "Cloudinary", "Git", "Docker (Basic)", "CI/CD"],
+        color: "#f59e0b",
+    },
+    {
+        icon: <Layers size={28} />,
+        title: "UI/UX Design",
+        desc: "Translating ideas into visually compelling experiences through prototyping and modern design principles.",
+        tags: ["Figma", "Glassmorphism", "Micro-animations", "Accessibility"],
+        color: "#ec4899",
+    },
 ];
 
 const Skills = () => {
     return (
         <section id="skills">
-            <div className={styles.sectionHeader}>
+            {/* Header */}
+            <div className={styles.header}>
+                <span className="section-label">What I Do</span>
                 <Reveal width="100%">
-                    <h2 className={styles.sectionTitle}>
+                    <h2 className={styles.heading}>
                         My <span className="text-gradient">Expertise</span>
                     </h2>
                 </Reveal>
                 <Reveal width="100%">
-                    <p className={styles.sectionSubtitle}>
-                        A deep dive into the technologies I use to bring ideas to life.
+                    <p className={styles.subheading}>
+                        A wide-ranging skill set built over years of real-world projects.
                     </p>
                 </Reveal>
             </div>
 
-            <div className={styles.skillsList}>
-                {skillsData.map((skill, index) => (
+            {/* Cards grid */}
+            <div className={styles.grid}>
+                {SKILLS.map((skill, i) => (
                     <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        key={i}
+                        className={`glass-card ${styles.card}`}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className={styles.skillRow}
+                        transition={{ delay: i * 0.09, duration: 0.5 }}
+                        style={{ "--accent-color": skill.color } as React.CSSProperties}
                     >
-                        <div className={styles.iconWrapper}>
+                        <div className={styles.iconBox}>
                             {skill.icon}
                         </div>
-
-                        <div className={styles.contentWrapper}>
-                            <h3 className={styles.skillTitle}>{skill.title}</h3>
-                            <p className={styles.skillDescription}>{skill.description}</p>
-                        </div>
-
-                        <div className={styles.tagWrapper}>
-                            {skill.tags.map(tag => (
-                                <span key={tag} className={styles.tag}>{tag}</span>
+                        <h3 className={styles.cardTitle}>{skill.title}</h3>
+                        <p className={styles.cardDesc}>{skill.desc}</p>
+                        <div className={styles.tags}>
+                            {skill.tags.map(t => (
+                                <span key={t} className={styles.tag}>{t}</span>
                             ))}
                         </div>
                     </motion.div>

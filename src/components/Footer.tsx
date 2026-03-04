@@ -2,40 +2,39 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import {
-    Github,
-    Linkedin,
-    Twitter,
-    Instagram,
-    Code2,
-    ArrowUpRight,
-    Mail,
-    Phone,
-    MessageCircle,
-    ArrowRight,
-    Facebook
-} from "lucide-react";
+import { Mail, Phone, MessageCircle, Instagram, Facebook, ArrowUpRight, MapPin } from "lucide-react";
 import styles from "./Footer.module.css";
-import { useToast } from "./Toast";
+
+const NAV_LINKS = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Projects", href: "#projects" },
+    { label: "Gallery", href: "#gallery" },
+    { label: "Contact", href: "#contact" },
+];
+
+const SOCIALS = [
+    { icon: <Instagram size={18} />, href: "https://instagram.com", label: "Instagram" },
+    { icon: <Facebook size={18} />, href: "https://facebook.com", label: "Facebook" },
+    { icon: <Mail size={18} />, href: "mailto:contact@gilltechsolutionsindia.info", label: "Email" },
+];
 
 const Footer = () => {
-    const currentYear = new Date().getFullYear();
-    const { showToast } = useToast();
-
+    const year = new Date().getFullYear();
     return (
         <footer className={styles.footer}>
-            <div className={styles.glow} />
-
-            <div className={styles.container}>
-                {/* CTA Section */}
-                <div className={styles.ctaSection}>
+            {/* Big CTA strip */}
+            <div className={styles.cta}>
+                <div className={styles.ctaInner}>
                     <motion.h2
+                        className={styles.ctaTitle}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className={styles.ctaTitle}
                     >
-                        Ready to build something <span className="text-gradient">extraordinary?</span>
+                        Got a project idea?<br />
+                        <span className="text-gradient">Let's make it real.</span>
                     </motion.h2>
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -44,81 +43,74 @@ const Footer = () => {
                         transition={{ delay: 0.2 }}
                     >
                         <Link href="#contact" className={styles.ctaBtn}>
-                            Let's Talk <ArrowRight size={20} />
+                            Start a Conversation <ArrowUpRight size={20} />
                         </Link>
                     </motion.div>
                 </div>
+            </div>
 
-                {/* Main Footer Content */}
-                <div className={styles.mainGrid}>
-                    <div className={styles.brandCol}>
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
-                            <div className={styles.brandIcon}>
-                                <img src="/logo.png" alt="Gill Tech Solutions India" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
-                            </div>
-                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Gill Tech Solutions India</span>
-                        </h3>
+            {/* Main footer */}
+            <div className={styles.main}>
+                <div className={styles.brand}>
+                    <div className={styles.brandMark}>SG</div>
+                    <div>
+                        <div className={styles.brandName}>Gill Tech Solutions India</div>
                         <p className={styles.brandDesc}>
-                            A dedicated software developer crafting high-performance,
-                            user-centric digital solutions with modern technologies.
+                            Crafting high-performance digital products with modern technologies and thoughtful design.
                         </p>
-                    </div>
-
-                    <div className={styles.navCol}>
-                        <h4>Navigation</h4>
-                        <ul className={styles.navLinks}>
-                            <li><Link href="#home" className={styles.navLink}>Home</Link></li>
-                            <li><Link href="#about" className={styles.navLink}>About Me</Link></li>
-                            <li><Link href="#skills" className={styles.navLink}>Expertise</Link></li>
-                            <li><Link href="#projects" className={styles.navLink}>Selected Works</Link></li>
-                        </ul>
-                    </div>
-
-                    <div className={styles.navCol}>
-                        <h4>Contact Info</h4>
-                        <ul className={styles.navLinks}>
-                            <li>
-                                <a
-                                    href="mailto:contact@gilltechsolutionsindia.info"
-                                    className={styles.navLink}
-                                >
-                                    <Mail size={16} />contact@gilltechsolutionsindia.info
+                        <div className={styles.socials}>
+                            {SOCIALS.map(s => (
+                                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className={styles.socialBtn} aria-label={s.label}>
+                                    {s.icon}
                                 </a>
-                            </li>
-                            <li>
-                                <a href="tel:+918264888290" className={styles.navLink}>
-                                    <Phone size={16} /> +91 82648 88290
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://wa.me/918264888290" target="_blank" rel="noopener noreferrer" className={styles.navLink}>
-                                    <MessageCircle size={16} /> WhatsApp
-                                </a>
-                            </li>
-                            <li className={styles.navLink}>
-                                Bathinda, Punjab, India
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className={styles.navCol}>
-                        <h4>Socials</h4>
-                        <div className={styles.socialGrid}>
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Instagram size={20} /></a>
-                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}><Facebook size={20} /></a>
-                            <a href="mailto:contact@gilltechsolutionsindia.info" className={styles.socialIcon}><Mail size={20} /></a>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                {/* Bottom Section */}
-                <div className={styles.bottom}>
-                    <p>© {currentYear} Sumit Gill. Crafted with passion.</p>
-                    <div className={styles.legalLinks}>
-                        <Link href="/admin" className={styles.legalLink}>Admin Panel</Link>
-                        <a href="#" className={styles.legalLink} onClick={(e) => { e.preventDefault(); alert("Privacy Policy coming soon."); }}>Privacy Policy</a>
-                        <a href="#" className={styles.legalLink} onClick={(e) => { e.preventDefault(); alert("Terms of Service coming soon."); }}>Terms of Service</a>
-                    </div>
+                <div className={styles.col}>
+                    <h4 className={styles.colTitle}>Navigation</h4>
+                    <ul className={styles.colList}>
+                        {NAV_LINKS.map(l => (
+                            <li key={l.label}>
+                                <Link href={l.href} className={styles.colLink}>{l.label}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className={styles.col}>
+                    <h4 className={styles.colTitle}>Contact</h4>
+                    <ul className={styles.colList}>
+                        <li>
+                            <a href="mailto:contact@gilltechsolutionsindia.info" className={styles.colLink}>
+                                <Mail size={14} />contact@gilltechsolutionsindia.info
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+918264888290" className={styles.colLink}>
+                                <Phone size={14} />+91 82648 88290
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/918264888290" target="_blank" rel="noopener noreferrer" className={styles.colLink}>
+                                <MessageCircle size={14} />WhatsApp
+                            </a>
+                        </li>
+                        <li className={styles.colLink} style={{ cursor: "default" }}>
+                            <MapPin size={14} />Bathinda, Punjab, India
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            {/* Bottom bar */}
+            <div className={styles.bottom}>
+                <p>© {year} Sumit Gill · Gill Tech Solutions India. All rights reserved.</p>
+                <div className={styles.bottomLinks}>
+                    <Link href="/admin" className={styles.bottomLink}>Admin Panel</Link>
+                    <a href="#" className={styles.bottomLink} onClick={e => { e.preventDefault(); alert("Privacy Policy coming soon."); }}>Privacy</a>
+                    <a href="#" className={styles.bottomLink} onClick={e => { e.preventDefault(); alert("Terms coming soon."); }}>Terms</a>
                 </div>
             </div>
         </footer>

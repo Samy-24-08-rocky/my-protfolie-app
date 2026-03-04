@@ -1,12 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, Github, Tag } from "lucide-react";
 import { CldImage } from 'next-cloudinary';
 import styles from "./Projects.module.css";
 import { Reveal } from "./Reveal";
-import Magnetic from "./Magnetic";
-
 import { useState, useEffect } from "react";
 
 interface Project {
@@ -20,142 +18,153 @@ interface Project {
     link?: string;
 }
 
+const DEFAULT_PROJECTS: Project[] = [
+    {
+        title: "EcoTrack Mobile App",
+        description: "A comprehensive Flutter application for tracking personal carbon footprint and promoting sustainable habits with real-time analytics and gamification.",
+        tags: ["Flutter", "Firebase", "Dart", "Charts"],
+        github: "#",
+        link: "#",
+    },
+    {
+        title: "Nexus Admin Dashboard",
+        description: "A sleek React SaaS dashboard for project management featuring dark mode, glassmorphism UI, drag-and-drop kanban, and real-time collaboration.",
+        tags: ["React", "Next.js", "TypeScript", "Framer Motion"],
+        github: "#",
+        link: "#",
+    },
+    {
+        title: "Gill Tech Portfolio",
+        description: "This very portfolio — built with Next.js, TypeScript, Framer Motion and MongoDB. Features an admin dashboard for content management.",
+        tags: ["Next.js", "MongoDB", "Cloudinary", "TypeScript"],
+        github: "#",
+        link: "#",
+    },
+];
+
+const COLORS = ["#ff4d00", "#7c3aed", "#0ea5e9", "#10b981", "#f59e0b", "#ec4899"];
+
 const Projects = () => {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [filter, setFilter] = useState<string>("All");
 
     useEffect(() => {
-        const fetchProjectsData = async () => {
+        const fetchProjects = async () => {
             try {
                 const res = await fetch('/api/projects');
                 const data = res.ok ? await res.json() : [];
-
-                if (data && data.length > 0) {
-                    setProjects(data);
-                } else {
-                    setProjects(getDefaultProjects());
-                }
-            } catch (error) {
-                console.error("Failed to load projects", error);
-                setProjects(getDefaultProjects());
+                setProjects(data.length > 0 ? data : DEFAULT_PROJECTS);
+            } catch {
+                setProjects(DEFAULT_PROJECTS);
             }
         };
-
-        const getDefaultProjects = () => [
-            {
-                title: "EcoTrack Mobile App",
-                description: "A comprehensive Flutter application for tracking personal carbon footprint and promoting sustainable habits with real-time analytics.",
-                image: "/projects/mobile-app.png",
-                tags: ["Flutter", "Firebase", "Dart"],
-                github: "#",
-                link: "#"
-            },
-            {
-                title: "Nexus Dashboard",
-                description: "A sleek React-based SaaS dashboard for project management featuring dark mode, glassmorphism.",
-                image: "/projects/web-app.png",
-                tags: ["React", "Next.js", "Framer Motion"],
-                github: "#",
-                link: "#"
-            }
-        ];
-
-        fetchProjectsData();
+        fetchProjects();
     }, []);
 
-    const formatUrl = (url?: string) => {
+    const allTags = ["All", ...Array.from(new Set(projects.flatMap(p => p.tags || [])))];
+    const filtered = filter === "All" ? projects : projects.filter(p => p.tags?.includes(filter));
+
+    const fmtUrl = (url?: string) => {
         if (!url || url === "#") return "#";
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            return `https://${url}`;
-        }
-        return url;
+        return url.startsWith("http") ? url : `https://${url}`;
     };
 
     return (
-        <section id="projects" className={styles.projectsSection}>
-            <div style={{ textAlign: "center", marginBottom: "60px" }}>
+        <section id="projects">
+            <div className={styles.header}>
+                <span className="section-label">Selected Work</span>
                 <Reveal width="100%">
-                    <h2 style={{ fontSize: "3rem" }}>
-                        Selected <span className="text-gradient">Projects</span>
+                    <h2 className={styles.heading}>
+                        Featured <span className="text-gradient">Projects</span>
                     </h2>
                 </Reveal>
                 <Reveal width="100%">
-                    <p style={{ color: "var(--text-muted)" }}>
-                        A glimpse into some of my favorite works.
-                    </p>
+                    <p className={styles.subheading}>A curated selection of my real-world builds.</p>
                 </Reveal>
+
+                {/* Tag filter */}
+                {allTags.length > 1 && (
+                    <div className={styles.filterRow}>
+                        {allTags.slice(0, 8).map(tag => (
+                            <button
+                                key={tag}
+                                onClick={() => setFilter(tag)}
+                                className={`${styles.filterBtn} ${filter === tag ? styles.filterBtnActive : ""}`}
+                            >
+                                {tag}
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
 
-            <div className={styles.projectsGrid}>
-                {projects.map((project, index) => (
-                    <motion.div
-                        key={project._id || project.id || index}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className={`glass-card ${styles.projectCard}`}
-                    >
-                        <a href={formatUrl(project.link)} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.imageWrapper} style={{ display: "block" }} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
-                            {project.image ? (
-                                project.image.includes('res.cloudinary.com') ? (
-                                    <CldImage
-                                        src={project.image}
-                                        alt={project.title}
-                                        width={800}
-                                        height={500}
-                                        crop="fill"
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                    />
-                                ) : (
-                                    <>
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={project.image}
-                                            alt={project.title}
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                        />
-                                    </>
-                                )
-                            ) : (
-                                <div style={{ width: '100%', height: '100%', background: 'var(--placeholder-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    No Image Available
+            <div className={styles.grid}>
+                <AnimatePresence mode="popLayout">
+                    {filtered.map((p, i) => {
+                        const accentColor = COLORS[i % COLORS.length];
+                        return (
+                            <motion.article
+                                key={p._id || p.id || i}
+                                layout
+                                initial={{ opacity: 0, scale: 0.92 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.92 }}
+                                transition={{ delay: i * 0.08 }}
+                                className={`glass-card ${styles.card}`}
+                                style={{ "--accent": accentColor } as React.CSSProperties}
+                            >
+                                {/* Image */}
+                                <div className={styles.imageWrap}>
+                                    {p.image ? (
+                                        p.image.includes('res.cloudinary.com') ? (
+                                            <CldImage src={p.image} alt={p.title} width={800} height={480} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        )
+                                    ) : (
+                                        <div className={styles.noImage}>
+                                            <Tag size={32} style={{ opacity: 0.3 }} />
+                                            <span>No preview yet</span>
+                                        </div>
+                                    )}
+                                    <div className={styles.imageOverlay} />
                                 </div>
-                            )}
 
-                        </a>
-                        <div className={styles.projectContent}>
-                            <h3 className={styles.projectTitle}>{project.title}</h3>
-                            <p className={styles.projectDescription}>{project.description}</p>
+                                {/* Content */}
+                                <div className={styles.content}>
+                                    <h3 className={styles.title}>{p.title}</h3>
+                                    <p className={styles.desc}>{p.description}</p>
 
-                            <div className={styles.projectFooter}>
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                                    {project.tags?.slice(0, 3).map((tag: string) => (
-                                        <span
-                                            key={tag}
-                                            style={{
-                                                fontSize: "0.7rem",
-                                                padding: "4px 8px",
-                                                background: "rgba(255,255,255,0.05)",
-                                                borderRadius: "4px",
-                                                color: "var(--primary)",
-                                            }}
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
+                                    <div className={styles.footer}>
+                                        <div className={styles.tags}>
+                                            {p.tags?.slice(0, 3).map(t => (
+                                                <span key={t} className={styles.tag}>{t}</span>
+                                            ))}
+                                        </div>
+                                        <div className={styles.links}>
+                                            {p.github && (
+                                                <a href={fmtUrl(p.github)} target="_blank" rel="noreferrer" className={styles.iconLink} title="GitHub">
+                                                    <Github size={18} />
+                                                </a>
+                                            )}
+                                            <a
+                                                href={fmtUrl(p.link)}
+                                                target={p.link && p.link !== "#" ? "_blank" : "_self"}
+                                                rel="noreferrer"
+                                                className={styles.iconLink}
+                                                title="Live Link"
+                                                onClick={(e) => { if (!p.link || p.link === "#") { e.preventDefault(); } }}
+                                            >
+                                                <ExternalLink size={18} />
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className={styles.linkGroup}>
-
-                                    <Magnetic>
-                                        <a href={formatUrl(project.link)} target={project.link && project.link !== "#" ? "_blank" : "_self"} rel="noreferrer" className={styles.iconLink} onClick={(e) => { if (!project.link || project.link === "#") { e.preventDefault(); alert("Live link not available for this project yet."); } }}>
-                                            <ExternalLink size={20} />
-                                        </a>
-                                    </Magnetic>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
+                            </motion.article>
+                        );
+                    })}
+                </AnimatePresence>
             </div>
         </section>
     );

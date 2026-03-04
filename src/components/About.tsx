@@ -2,57 +2,33 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { Code2, Smartphone, Globe, Award } from "lucide-react";
+import { Award, Globe, Code2, Smartphone } from "lucide-react";
 import styles from "./About.module.css";
 import { Reveal } from "./Reveal";
 
+const TECH = ["React", "Next.js", "TypeScript", "Node.js", "Flutter", "Java", "MongoDB", "Firebase", "Android", "PostgreSQL"];
+
 const stats = [
-    { icon: <Award size={24} />, value: 3, suffix: "+", label: "Years Experience" },
-    { icon: <Globe size={24} />, value: 20, suffix: "+", label: "Projects Delivered" },
-    { icon: <Code2 size={24} />, value: 15, suffix: "+", label: "Technologies" },
-    { icon: <Smartphone size={24} />, value: 5, suffix: "+", label: "Mobile Apps" },
+    { icon: <Award size={20} />, value: 3, suffix: "+", label: "Years Experience" },
+    { icon: <Globe size={20} />, value: 20, suffix: "+", label: "Projects Delivered" },
+    { icon: <Code2 size={20} />, value: 15, suffix: "+", label: "Technologies" },
+    { icon: <Smartphone size={20} />, value: 5, suffix: "+", label: "Mobile Apps" },
 ];
 
-function StatCard({ icon, value, suffix, label, index, enabled }: {
-    icon: React.ReactNode;
-    value: number;
-    suffix: string;
-    label: string;
-    index: number;
-    enabled: boolean;
-}) {
+function AnimatedCount({ value, enabled }: { value: number; enabled: boolean }) {
     const [count, setCount] = useState(0);
-
     useEffect(() => {
         if (!enabled) return;
         let start = 0;
-        const duration = 1800;
-        const increment = value / (duration / 16);
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= value) {
-                setCount(value);
-                clearInterval(timer);
-            } else {
-                setCount(Math.floor(start));
-            }
+        const inc = value / (1600 / 16);
+        const t = setInterval(() => {
+            start += inc;
+            if (start >= value) { setCount(value); clearInterval(t); }
+            else setCount(Math.floor(start));
         }, 16);
-        return () => clearInterval(timer);
+        return () => clearInterval(t);
     }, [enabled, value]);
-
-    return (
-        <motion.div
-            className={styles.statCard}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.12, duration: 0.5 }}
-        >
-            <div className={styles.statIcon}>{icon}</div>
-            <div className={styles.statNumber}>{count}{suffix}</div>
-            <div className={styles.statLabel}>{label}</div>
-        </motion.div>
-    );
+    return <>{count}</>;
 }
 
 const About = () => {
@@ -61,45 +37,57 @@ const About = () => {
 
     return (
         <section id="about">
-            <div className={styles.aboutContainer}>
-                <div className={styles.aboutContent}>
+            <div className={styles.container}>
+                {/* Left — text */}
+                <div className={styles.textCol}>
+                    <span className="section-label">About Me</span>
                     <Reveal width="100%">
-                        <h2 className={styles.title}>
-                            About <span className="text-gradient">Me</span>
+                        <h2 className={styles.heading}>
+                            Passionate Developer,<br />
+                            <span className="text-gradient">Problem Solver</span>
                         </h2>
                     </Reveal>
                     <Reveal width="100%">
-                        <p className={styles.description}>
-                            I am a passionate Software Developer with a strong foundation in
-                            both Web and Mobile ecosystems. With expertise in React and
-                            Next.js for the web, and Java, Android, and Flutter for mobile, I
-                            build seamless digital experiences that bridge the gap between
-                            functionality and aesthetics. I specialize in creating robust,
-                            scalable, and user-friendly applications that solve real-world problems.
+                        <p className={styles.desc}>
+                            I'm a full-stack software developer from <strong>Bathinda, Punjab, India</strong> with
+                            a passion for building seamless, user-centric digital experiences.
+                            My expertise spans modern web technologies like <strong>React &amp; Next.js</strong>,
+                            mobile development with <strong>Flutter &amp; Android</strong>, and robust back‑ends
+                            using <strong>Node.js, Java, and .NET</strong>.
+                        </p>
+                        <p className={styles.desc} style={{ marginTop: "16px" }}>
+                            I believe great software is not just functional — it should feel
+                            effortless and delightful for every end user.
                         </p>
                     </Reveal>
 
+                    {/* Tech stack */}
                     <Reveal width="100%">
-                        <div className={styles.techStack}>
-                            {["React", "Next.js", "TypeScript", "Flutter", "Node.js", "MongoDB", "Firebase", "Java"].map((tech) => (
-                                <span key={tech} className={styles.techBadge}>{tech}</span>
+                        <div className={styles.techRow}>
+                            {TECH.map(t => (
+                                <span key={t} className={styles.techBadge}>{t}</span>
                             ))}
                         </div>
                     </Reveal>
                 </div>
 
-                {/* Animated Stats */}
+                {/* Right — stats grid */}
                 <div className={styles.statsGrid} ref={statsRef}>
-                    {stats.map((stat, i) => (
-                        <StatCard
+                    {stats.map((s, i) => (
+                        <motion.div
                             key={i}
-                            index={i}
-                            icon={stat.icon}
-                            value={stat.value}
-                            suffix={stat.suffix}
-                            label={stat.label}
-                            enabled={inView}
-                        />
+                            className={`glass-card ${styles.statCard}`}
+                            initial={{ opacity: 0, scale: 0.85 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1, duration: 0.5 }}
+                        >
+                            <div className={styles.statIcon}>{s.icon}</div>
+                            <div className={styles.statNum}>
+                                <AnimatedCount value={s.value} enabled={inView} />{s.suffix}
+                            </div>
+                            <div className={styles.statLabel}>{s.label}</div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

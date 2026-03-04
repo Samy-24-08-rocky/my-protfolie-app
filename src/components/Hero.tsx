@@ -1,156 +1,145 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, ArrowDown, Sparkles } from "lucide-react";
 import styles from "./Hero.module.css";
 import Link from "next/link";
-import Magnetic from "./Magnetic";
 import { useState, useEffect, useRef } from "react";
 
-const TYPING_PHRASES = [
-    "Modern Web Apps",
-    "Mobile Experiences",
-    "Scalable Backends",
-    "Stunning UI/UX",
-];
+const ROLES = ["Full‑Stack Developer", "Mobile App Builder", "UI/UX Enthusiast", "Backend Engineer"];
 
 const Hero = () => {
-    const [mounted, setMounted] = useState(false);
-    const [branding, setBranding] = useState({
-        title: "Crafting Modern \n Digital Experiences",
-        desc: "I'm a Full-Stack Developer specializing in React, Next.js, and Mobile apps. Transforming complex problems into elegant, user-centric solutions."
-    });
-    const [typedText, setTypedText] = useState("");
-    const [phraseIndex, setPhraseIndex] = useState(0);
-    const [charIndex, setCharIndex] = useState(0);
+    const [roleIndex, setRoleIndex] = useState(0);
+    const [displayed, setDisplayed] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
-    const container = useRef(null);
+    const [charIdx, setCharIdx] = useState(0);
+    const containerRef = useRef<HTMLElement>(null);
 
+    const { scrollYProgress } = useScroll({ target: containerRef });
+    const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+    // Typewriter
     useEffect(() => {
-        setMounted(true);
-        const fetchSettings = async () => {
-            try {
-                const res = await fetch('/api/settings');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.branding) setBranding(data.branding);
-                }
-            } catch (error) {
-                console.error("Failed to load hero settings", error);
-            }
-        };
-        fetchSettings();
-    }, []);
-
-    // Typing effect
-    useEffect(() => {
-        const currentPhrase = TYPING_PHRASES[phraseIndex];
-        const speed = isDeleting ? 50 : 100;
-
+        const current = ROLES[roleIndex];
+        const speed = isDeleting ? 40 : 90;
         const timer = setTimeout(() => {
-            if (!isDeleting && charIndex < currentPhrase.length) {
-                setTypedText(currentPhrase.slice(0, charIndex + 1));
-                setCharIndex(c => c + 1);
-            } else if (isDeleting && charIndex > 0) {
-                setTypedText(currentPhrase.slice(0, charIndex - 1));
-                setCharIndex(c => c - 1);
-            } else if (!isDeleting && charIndex === currentPhrase.length) {
-                setTimeout(() => setIsDeleting(true), 1800);
-            } else if (isDeleting && charIndex === 0) {
+            if (!isDeleting && charIdx < current.length) {
+                setDisplayed(current.slice(0, charIdx + 1));
+                setCharIdx(c => c + 1);
+            } else if (isDeleting && charIdx > 0) {
+                setDisplayed(current.slice(0, charIdx - 1));
+                setCharIdx(c => c - 1);
+            } else if (!isDeleting && charIdx === current.length) {
+                setTimeout(() => setIsDeleting(true), 2000);
+            } else if (isDeleting && charIdx === 0) {
                 setIsDeleting(false);
-                setPhraseIndex(p => (p + 1) % TYPING_PHRASES.length);
+                setRoleIndex(r => (r + 1) % ROLES.length);
             }
         }, speed);
-
         return () => clearTimeout(timer);
-    }, [charIndex, isDeleting, phraseIndex]);
+    }, [charIdx, isDeleting, roleIndex]);
+
+    const stats = [
+        { value: "3+", label: "Years Exp." },
+        { value: "20+", label: "Projects" },
+        { value: "100%", label: "Client Satisfaction" },
+    ];
 
     return (
-        <section id="home" className={styles.hero} ref={container}>
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className={styles.badge}
-            >
-                <span className={styles.badgeDot} />
-                <span>Available for Freelance Projects</span>
+        <section id="home" className={styles.hero} ref={containerRef}>
+            {/* Decorative Blobs */}
+            <div className={styles.blobOrange} />
+            <div className={styles.blobViolet} />
+            <div className={styles.grid} aria-hidden="true" />
+
+            <motion.div className={styles.content} style={{ y, opacity }}>
+                {/* Status badge */}
+                <motion.div
+                    className={styles.badge}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <span className={styles.badgeDot} />
+                    <span>Available for Freelance & Full‑time</span>
+                    <Sparkles size={13} />
+                </motion.div>
+
+                {/* Headline */}
+                <motion.h1
+                    className={styles.title}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
+                >
+                    Hi, I'm{" "}
+                    <span className="text-gradient">Sumit Gill</span>
+                    <br />
+                    a <span className={styles.typeWrapper}>
+                        {displayed}
+                        <span className={styles.caret} />
+                    </span>
+                </motion.h1>
+
+                {/* Subtitle */}
+                <motion.p
+                    className={styles.subtitle}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.25 }}
+                >
+                    I craft high‑performance web & mobile applications that combine clean
+                    code with stunning design — turning your ideas into impactful digital products.
+                </motion.p>
+
+                {/* CTAs */}
+                <motion.div
+                    className={styles.ctas}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.4 }}
+                >
+                    <Link href="#projects" className={styles.primaryBtn} id="hero-view-work-btn">
+                        View My Work <ArrowRight size={18} />
+                    </Link>
+                    <Link href="#contact" className={styles.secondaryBtn} id="hero-contact-btn">
+                        Let's Talk
+                    </Link>
+                </motion.div>
+
+                {/* Stats */}
+                <motion.div
+                    className={styles.stats}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.7, duration: 0.8 }}
+                >
+                    {stats.map((s, i) => (
+                        <div key={i} className={styles.statItem}>
+                            <span className={styles.statValue}>{s.value}</span>
+                            <span className={styles.statLabel}>{s.label}</span>
+                        </div>
+                    ))}
+                </motion.div>
             </motion.div>
 
-            <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className={styles.title}
-            >
-                I Build{" "}
-                <span className="text-gradient">
-                    {typedText}
-                    <span className={styles.cursor}>|</span>
-                </span>
-            </motion.h1>
-
-            <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className={styles.subtitle}
-            >
-                {branding.desc}
-            </motion.p>
-
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className={styles.ctaGroup}
-            >
-                <Magnetic>
-                    <Link href="#projects" className={styles.primaryBtn}>
-                        View My Work{" "}
-                        <ArrowRight size={20} style={{ marginLeft: 8, display: "inline" }} />
-                    </Link>
-                </Magnetic>
-                <Magnetic>
-                    <Link href="#contact" className={styles.secondaryBtn}>
-                        Get in Touch
-                    </Link>
-                </Magnetic>
-            </motion.div>
-
-            {/* Floating stat chips */}
-            <motion.div
+            {/* Scroll indicator */}
+            <motion.a
+                href="#about"
+                className={styles.scrollIndicator}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-                className={styles.statsRow}
+                transition={{ delay: 1.2 }}
             >
-                {[
-                    { value: "3+", label: "Years Exp." },
-                    { value: "20+", label: "Projects" },
-                    { value: "100%", label: "Satisfaction" },
-                ].map((s, i) => (
-                    <div key={i} className={styles.statChip}>
-                        <span className={styles.statValue}>{s.value}</span>
-                        <span className={styles.statLabel}>{s.label}</span>
-                    </div>
-                ))}
-            </motion.div>
-
-            <div className={styles.backgroundShapes}>
-                <div className={styles.shape1} />
-                <div className={styles.shape2} />
-                <div className={styles.shape3} />
-            </div>
-
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 1 }}
-                className={styles.scrollDown}
-            >
-                <ChevronDown size={32} />
-            </motion.div>
+                <motion.span
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+                >
+                    <ArrowDown size={20} />
+                </motion.span>
+                <span>Scroll</span>
+            </motion.a>
         </section>
     );
 };
