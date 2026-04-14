@@ -12,7 +12,7 @@ const CONTACT_ITEMS = [
     { icon: <Phone size={20} />, label: "Phone", value: "+91 82648 88290", href: "tel:+918264888290" },
     { icon: <MessageCircle size={20} />, label: "WhatsApp", value: "+91 82648 88290", href: "https://wa.me/918264888290" },
     { icon: <Facebook size={20} />, label: "Facebook", value: "Sumit Gill", href: "https://facebook.com" },
-    { icon: <MapPin size={20} />, label: "Location", value: "Bathinda, Punjab, India" },
+    { icon: <MapPin size={20} />, label: "Location", value: "Bathinda, Punjab, India", href: "https://www.google.com/maps/search/Bathinda,+Punjab,+India" },
     { icon: <Clock size={20} />, label: "Timezone", value: "IST (UTC +5:30)" },
 ];
 

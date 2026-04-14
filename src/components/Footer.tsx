@@ -97,8 +97,10 @@ const Footer = () => {
                                 <MessageCircle size={14} />WhatsApp
                             </a>
                         </li>
-                        <li className={styles.colLink} style={{ cursor: "default" }}>
-                            <MapPin size={14} />Bathinda, Punjab, India
+                        <li>
+                            <a href="https://www.google.com/maps/search/Bathinda,+Punjab,+India" target="_blank" rel="noopener noreferrer" className={styles.colLink}>
+                                <MapPin size={14} />Bathinda, Punjab, India
+                            </a>
                         </li>
                     </ul>
                 </div>
