@@ -11,7 +11,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                background 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dot {
@@ -23,11 +26,11 @@
 }
 
 .hovering {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 0, 0, 0.1);
-    border-color: rgba(255, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    width: 54px;
+    height: 54px;
+    background: rgba(197, 168, 128, 0.06);
+    border-color: var(--primary);
+    backdrop-filter: blur(2px);
     pointer-events: none;
 }
 

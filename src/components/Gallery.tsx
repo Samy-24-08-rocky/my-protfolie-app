@@ -23,8 +23,8 @@ const Gallery = () => {
             }
         };
         const getDefaults = () => [
-            { id: 1, type: "image", src: "/projects/web-app.png", title: "E-Commerce Dashboard", category: "Web" },
-            { id: 2, type: "video", src: "/projects/mobile-app.png", title: "Fitness Tracker Demo", category: "Mobile" },
+            { id: 1, type: "image", src: "/projects/ecommerce_dashboard.png", title: "E-Commerce Dashboard", category: "Web" },
+            { id: 2, type: "image", src: "/projects/fitness_tracker.png", title: "Fitness Tracker Demo", category: "Mobile" },
         ];
         fetchGallery();
     }, []);
@@ -49,7 +49,7 @@ const Gallery = () => {
     }, [lightboxIndex, closeLightbox, prev, next]);
 
     return (
-        <section id="gallery">
+        <section id="gallery" className={styles.gallerySection}>
             {/* Header */}
             <div className={styles.header}>
                 <span className="section-label">Gallery</span>
@@ -105,7 +105,7 @@ const Gallery = () => {
                             <div className={styles.media}>
                                 {item.src ? (
                                     item.type === "video" ? (
-                                        <video src={item.src} muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <video src={item.src} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : item.src.includes('res.cloudinary.com') ? (
                                         <CldImage src={item.src} alt={item.title} width={600} height={450} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (

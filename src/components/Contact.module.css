@@ -1,6 +1,12 @@
+.contactSection {
+    position: relative;
+    border-bottom: 1px solid var(--surface-border);
+    margin-bottom: 20px;
+}
+
 .header {
     text-align: center;
-    margin-bottom: 56px;
+    margin-bottom: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,55 +14,66 @@
 }
 
 .heading {
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-family: var(--font-heading);
+    color: var(--text-main);
+    font-weight: 500;
 }
 
 .subheading {
     color: var(--text-muted);
-    font-size: 1rem;
-    max-width: 500px;
+    font-size: 0.92rem;
+    max-width: 520px;
+    line-height: 1.7;
+    font-family: var(--font-body);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 32px;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 50px;
     align-items: start;
 }
 
-/* Info col */
+/* Info Column */
 .infoCol {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
+    text-align: left;
 }
 
 .infoGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
 }
 
 .infoCard {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    padding: 16px;
+    gap: 14px;
+    padding: 20px;
     text-decoration: none;
     color: var(--text-main);
-    transition: all 0.25s ease;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .infoCard:hover {
     border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--primary-glow);
 }
 
 .infoIcon {
     width: 38px;
     height: 38px;
-    background: var(--primary-glow);
-    border-radius: 10px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,165 +82,181 @@
 }
 
 .infoLabel {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 0 0 3px;
+    letter-spacing: 0.1em;
+    font-family: var(--font-body);
+    margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .infoValue {
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 500;
     color: var(--text-main);
+    font-family: var(--font-body);
     margin: 0;
     word-break: break-word;
 }
 
-/* Availability */
+/* Availability Status */
 .availability {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 18px;
-    background: rgba(34, 197, 94, 0.08);
-    border: 1px solid rgba(34, 197, 94, 0.2);
-    border-radius: 12px;
-    font-size: 0.85rem;
+    gap: 10px;
+    padding: 14px 20px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 8px;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: #16a34a;
-}
-
-[data-theme='dark'] .availability {
-    color: #4ade80;
-    background: rgba(74, 222, 128, 0.08);
-    border-color: rgba(74, 222, 128, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    font-family: var(--font-body);
 }
 
 .availDot {
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
     border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 2.5s ease-in-out infinite;
     flex-shrink: 0;
 }
 
 @keyframes pulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.6);
     }
-
     50% {
-        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+        box-shadow: 0 0 0 6px rgba(197, 168, 128, 0);
     }
 }
 
-/* Form */
+/* Form Card */
 .formCard {
-    padding: 32px;
+    padding: 40px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    text-align: left;
 }
 
 .formTitle {
-    font-size: 1.2rem;
-    margin-bottom: 24px;
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-family: var(--font-heading);
+    color: var(--text-main);
+    margin-bottom: 30px;
+    letter-spacing: 0.01em;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 24px;
 }
 
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 24px;
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .label {
-    font-size: 0.78rem;
+    font-size: 0.68rem;
     font-weight: 600;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    font-family: var(--font-body);
 }
 
 .input,
 .textarea {
-    padding: 11px 14px;
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: 10px;
-    font-size: 0.88rem;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--input-border);
+    border-radius: 0;
+    font-size: 0.9rem;
     color: var(--text-main);
     font-family: var(--font-body);
     outline: none;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.3s ease;
     resize: none;
 }
 
 .input:focus,
 .textarea:focus {
-    border-color: var(--primary);
-    background: var(--input-focus);
+    border-bottom-color: var(--primary);
 }
 
 .input::placeholder,
 .textarea::placeholder {
     color: var(--text-muted);
-    opacity: 0.6;
+    opacity: 0.45;
 }
 
 .submitBtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 13px 28px;
+    gap: 10px;
+    padding: 14px 32px;
     background: var(--primary);
-    color: white;
+    color: var(--background);
     border: none;
-    border-radius: 12px;
-    font-size: 0.95rem;
+    border-radius: 30px;
+    font-size: 0.78rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     font-family: var(--font-body);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     align-self: flex-start;
 }
 
 .submitBtn:hover:not(:disabled) {
-    background: var(--secondary);
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255, 77, 0, 0.25);
+    box-shadow: 0 8px 24px var(--primary-glow);
 }
 
 .submitBtn:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
     .grid {
         grid-template-columns: 1fr;
+        gap: 40px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .infoGrid {
         grid-template-columns: 1fr;
     }
 
     .row {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .formCard {
+        padding: 30px 20px;
     }
 }

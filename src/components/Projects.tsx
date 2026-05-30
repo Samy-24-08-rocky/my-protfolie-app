@@ -7,6 +7,11 @@ import styles from "./Projects.module.css";
 import { Reveal } from "./Reveal";
 import { useState, useEffect } from "react";
 
+const isVideoUrl = (url?: string) => {
+    if (!url) return false;
+    return url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.mov') || url.includes('/video/upload/') || url.includes('.mp4?');
+};
+
 interface Project {
     _id?: string;
     id?: string;
@@ -22,6 +27,7 @@ const DEFAULT_PROJECTS: Project[] = [
     {
         title: "EcoTrack Mobile App",
         description: "A comprehensive Flutter application for tracking personal carbon footprint and promoting sustainable habits with real-time analytics and gamification.",
+        image: "/projects/ecotrack_preview.png",
         tags: ["Flutter", "Firebase", "Dart", "Charts"],
         github: "#",
         link: "#",
@@ -29,6 +35,7 @@ const DEFAULT_PROJECTS: Project[] = [
     {
         title: "Nexus Admin Dashboard",
         description: "A sleek React SaaS dashboard for project management featuring dark mode, glassmorphism UI, drag-and-drop kanban, and real-time collaboration.",
+        image: "/projects/nexus_preview.png",
         tags: ["React", "Next.js", "TypeScript", "Framer Motion"],
         github: "#",
         link: "#",
@@ -36,6 +43,7 @@ const DEFAULT_PROJECTS: Project[] = [
     {
         title: "Gill Tech Portfolio",
         description: "This very portfolio — built with Next.js, TypeScript, Framer Motion and MongoDB. Features an admin dashboard for content management.",
+        image: "/projects/gilltech_preview.png",
         tags: ["Next.js", "MongoDB", "Cloudinary", "TypeScript"],
         github: "#",
         link: "#",
@@ -70,7 +78,7 @@ const Projects = () => {
     };
 
     return (
-        <section id="projects">
+        <section id="projects" className={styles.projectsSection}>
             <div className={styles.header}>
                 <span className="section-label">Selected Work</span>
                 <Reveal width="100%">
@@ -116,7 +124,9 @@ const Projects = () => {
                                 {/* Image */}
                                 <div className={styles.imageWrap}>
                                     {p.image ? (
-                                        p.image.includes('res.cloudinary.com') ? (
+                                        isVideoUrl(p.image) ? (
+                                            <video src={p.image} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : p.image.includes('res.cloudinary.com') ? (
                                             <CldImage src={p.image} alt={p.title} width={800} height={480} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         ) : (
                                             // eslint-disable-next-line @next/next/no-img-element

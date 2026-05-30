@@ -1,11 +1,13 @@
 .footer {
     width: 100%;
-    margin-top: 80px;
+    margin-top: 60px;
+    border-top: 1px solid var(--surface-border);
 }
 
-/* CTA Strip */
+/* CTA Section */
 .cta {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: var(--surface);
+    border-bottom: 1px solid var(--surface-border);
     padding: 0;
 }
 
@@ -18,136 +20,154 @@
     justify-content: space-between;
     gap: 32px;
     flex-wrap: wrap;
+    text-align: left;
 }
 
 .ctaTitle {
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
-    line-height: 1.2;
-    color: white;
-    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--text-main);
+    font-weight: 500;
+    letter-spacing: -0.01em;
 }
 
 .ctaBtn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 14px 30px;
-    background: white;
-    color: var(--primary);
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.95rem;
+    gap: 10px;
+    padding: 14px 32px;
+    background: var(--primary);
+    color: var(--background);
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     text-decoration: none;
     white-space: nowrap;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--primary);
 }
 
 .ctaBtn:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: transparent;
+    color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px var(--primary-glow);
 }
 
 /* Main */
 .main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 64px 24px;
+    padding: 80px 24px;
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px;
+    gap: 60px;
+    text-align: left;
 }
 
 .brand {
     display: flex;
-    gap: 16px;
+    gap: 18px;
     align-items: flex-start;
 }
 
 .brandMark {
     width: 44px;
     height: 44px;
-    background: var(--primary);
-    color: white;
-    border-radius: 12px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.85rem;
     flex-shrink: 0;
     font-family: var(--font-heading);
+    transition: all 0.3s ease;
+}
+
+.brandMark:hover {
+    background: var(--primary);
+    color: var(--background);
 }
 
 .brandName {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 500;
     font-family: var(--font-heading);
     color: var(--text-main);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
 }
 
 .brandDesc {
     font-size: 0.85rem;
     color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 300px;
-    margin-bottom: 16px;
+    line-height: 1.75;
+    max-width: 320px;
+    margin-bottom: 20px;
+    font-family: var(--font-body);
 }
 
 .socials {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
 .socialBtn {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
     border: 1px solid var(--surface-border);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .socialBtn:hover {
     border-color: var(--primary);
     color: var(--primary);
-    background: var(--primary-glow);
+    box-shadow: 0 0 10px var(--primary-glow);
 }
 
 .col {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
 }
 
 .colTitle {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 700;
+    letter-spacing: 0.15em;
+    font-weight: 600;
     color: var(--text-main);
+    font-family: var(--font-body);
 }
 
 .colList {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .colLink {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     font-size: 0.85rem;
     color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.2s;
+    font-family: var(--font-body);
+    transition: color 0.3s ease;
 }
 
 .colLink:hover {
@@ -159,26 +179,27 @@
     border-top: 1px solid var(--surface-border);
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 24px;
+    padding: 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
+    font-family: var(--font-body);
 }
 
 .bottomLinks {
     display: flex;
-    gap: 20px;
+    gap: 24px;
 }
 
 .bottomLink {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.82rem;
-    transition: color 0.2s;
+    font-size: 0.78rem;
+    transition: color 0.3s ease;
 }
 
 .bottomLink:hover {
@@ -188,6 +209,8 @@
 @media (max-width: 900px) {
     .main {
         grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        padding: 60px 24px;
     }
 
     .brand {
@@ -202,6 +225,8 @@
 
     .ctaInner {
         flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .bottom {

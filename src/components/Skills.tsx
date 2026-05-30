@@ -7,63 +7,63 @@ import { Reveal } from "./Reveal";
 
 const SKILLS = [
     {
-        icon: <Layout size={28} />,
+        icon: <Layout size={24} />,
         title: "Frontend & Web",
         desc: "Building pixel-perfect, responsive interfaces with React, Next.js, TypeScript and modern CSS.",
         tags: ["React", "Next.js", "TypeScript", "CSS Modules", "Framer Motion"],
-        color: "#ff4d00",
+        color: "#9E7A44", // Gold/Bronze
     },
     {
-        icon: <Smartphone size={28} />,
+        icon: <Smartphone size={24} />,
         title: "Mobile Development",
         desc: "Cross-platform iOS & Android apps with Flutter, plus native Android using Java & Kotlin.",
         tags: ["Flutter", "Dart", "Java", "Android SDK", "Firebase"],
-        color: "#7c3aed",
+        color: "#C1694F", // Terracotta/Copper
     },
     {
-        icon: <Server size={28} />,
+        icon: <Server size={24} />,
         title: "Backend Engineering",
         desc: "Scalable REST APIs, microservices, and server-side solutions using Node.js, Java, and .NET.",
         tags: ["Node.js", "Express", "Java Spring", ".NET Core", "REST APIs"],
-        color: "#0ea5e9",
+        color: "#582A2E", // Wine/Burgundy
     },
     {
-        icon: <Database size={28} />,
+        icon: <Database size={24} />,
         title: "Databases",
         desc: "Designing and managing SQL & NoSQL databases with a focus on performance and data integrity.",
         tags: ["MongoDB", "PostgreSQL", "MySQL", "Firebase Firestore"],
-        color: "#10b981",
+        color: "#7E746F", // Warm Taupe
     },
     {
-        icon: <Globe size={28} />,
+        icon: <Globe size={24} />,
         title: "DevOps & Cloud",
         desc: "Deploying and monitoring applications using cloud platforms, CI/CD pipelines and containers.",
         tags: ["Vercel", "Cloudinary", "Git", "Docker (Basic)", "CI/CD"],
-        color: "#f59e0b",
+        color: "#A78D5F", // Muted Brass
     },
     {
-        icon: <Layers size={28} />,
+        icon: <Layers size={24} />,
         title: "UI/UX Design",
         desc: "Translating ideas into visually compelling experiences through prototyping and modern design principles.",
         tags: ["Figma", "Glassmorphism", "Micro-animations", "Accessibility"],
-        color: "#ec4899",
+        color: "#B68D8E", // Muted Alabaster Rose
     },
 ];
 
 const Skills = () => {
     return (
-        <section id="skills">
+        <section id="skills" className={styles.skillsSection}>
             {/* Header */}
             <div className={styles.header}>
-                <span className="section-label">What I Do</span>
+                <span className="section-label">Expertise</span>
                 <Reveal width="100%">
                     <h2 className={styles.heading}>
-                        My <span className="text-gradient">Expertise</span>
+                        My <span className="text-gradient">Capabilities</span>
                     </h2>
                 </Reveal>
                 <Reveal width="100%">
                     <p className={styles.subheading}>
-                        A wide-ranging skill set built over years of real-world projects.
+                        A detailed catalog of technical specializations cultivated over years of professional development.
                     </p>
                 </Reveal>
             </div>
@@ -74,16 +74,18 @@ const Skills = () => {
                     <motion.div
                         key={i}
                         className={`glass-card ${styles.card}`}
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: i * 0.09, duration: 0.5 }}
+                        transition={{ delay: i * 0.08, duration: 0.6 }}
                         style={{ "--accent-color": skill.color } as React.CSSProperties}
                     >
-                        <div className={styles.iconBox}>
-                            {skill.icon}
+                        <div className={styles.cardHeader}>
+                            <div className={styles.iconBox}>
+                                {skill.icon}
+                            </div>
+                            <h3 className={styles.cardTitle}>{skill.title}</h3>
                         </div>
-                        <h3 className={styles.cardTitle}>{skill.title}</h3>
                         <p className={styles.cardDesc}>{skill.desc}</p>
                         <div className={styles.tags}>
                             {skill.tags.map(t => (
