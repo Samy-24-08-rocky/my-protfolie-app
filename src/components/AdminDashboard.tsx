@@ -20,7 +20,10 @@ import {
     Database,
     RefreshCcw,
     AlertTriangle,
-    Menu
+    Menu,
+    Lock,
+    Eye,
+    EyeOff
 } from "lucide-react";
 import styles from "./AdminDashboard.module.css";
 import Link from "next/link";
@@ -42,6 +45,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
         { id: "skills", label: "Expertise", icon: <Code2 size={20} /> },
         { id: "messages", label: "Messages", icon: <Mail size={20} /> },
         { id: "maintenance", label: "Maintenance", icon: <ShieldCheck size={20} /> },
+        { id: "security", label: "Security", icon: <Lock size={20} /> },
     ];
 
     const showSaveSuccess = () => {
@@ -131,6 +135,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
                 {activeTab === "skills" && <SkillsTab onSuccess={showSaveSuccess} />}
                 {activeTab === "messages" && <MessagesTab onSuccess={showSaveSuccess} />}
                 {activeTab === "maintenance" && <MaintenanceTab onSuccess={showSaveSuccess} />}
+                {activeTab === "security" && <SecurityTab onSuccess={showSaveSuccess} />}
             </main>
         </div>
     );
@@ -803,6 +808,194 @@ const MaintenanceTab = ({ onSuccess }: { onSuccess: () => void }) => {
                     </div>
                 )}
             </div>
+        </div>
+    );
+};
+
+const SecurityTab = ({ onSuccess }: { onSuccess: () => void }) => {
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newUsername, setNewUsername] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+        setMessage("");
+
+        if (newPassword !== confirmPassword) {
+            setError("New passwords do not match.");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const res = await fetch('/api/admin/change-credentials', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentPassword, newUsername, newPassword })
+            });
+
+            const data = await res.json();
+            if (res.ok && data.success) {
+                setMessage(data.message || "Credentials updated successfully!");
+                setCurrentPassword("");
+                setNewUsername("");
+                setNewPassword("");
+                setConfirmPassword("");
+                onSuccess();
+            } else {
+                setError(data.error || "Failed to update credentials.");
+            }
+        } catch (err) {
+            setError("Failed to update credentials. Please check connection.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className={styles.card}>
+            <h3 className={styles.cardTitle}><Lock size={20} /> Security Settings</h3>
+            <p style={{ color: 'var(--text-muted)', marginBottom: 20 }}>
+                Update the admin username and password for the system.
+            </p>
+
+            <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Current Password</label>
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type={showCurrentPassword ? "text" : "password"}
+                            className={styles.input}
+                            style={{ paddingRight: '44px' }}
+                            placeholder="Enter current password to verify identity"
+                            value={currentPassword}
+                            onChange={e => setCurrentPassword(e.target.value)}
+                            required
+                            disabled={loading}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                            style={{
+                                position: 'absolute',
+                                right: 14,
+                                top: 12,
+                                background: 'none',
+                                border: 'none',
+                                color: 'var(--text-muted)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                            title={showCurrentPassword ? "Hide password" : "Show password"}
+                        >
+                            {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>New Username</label>
+                    <input
+                        type="text"
+                        className={styles.input}
+                        placeholder="Enter new admin username"
+                        value={newUsername}
+                        onChange={e => setNewUsername(e.target.value)}
+                        required
+                        disabled={loading}
+                    />
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>New Password</label>
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type={showNewPassword ? "text" : "password"}
+                            className={styles.input}
+                            style={{ paddingRight: '44px' }}
+                            placeholder="Enter new password"
+                            value={newPassword}
+                            onChange={e => setNewPassword(e.target.value)}
+                            required
+                            disabled={loading}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowNewPassword(!showNewPassword)}
+                            style={{
+                                position: 'absolute',
+                                right: 14,
+                                top: 12,
+                                background: 'none',
+                                border: 'none',
+                                color: 'var(--text-muted)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                            title={showNewPassword ? "Hide password" : "Show password"}
+                        >
+                            {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Confirm New Password</label>
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            className={styles.input}
+                            style={{ paddingRight: '44px' }}
+                            placeholder="Confirm new password"
+                            value={confirmPassword}
+                            onChange={e => setConfirmPassword(e.target.value)}
+                            required
+                            disabled={loading}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            style={{
+                                position: 'absolute',
+                                right: 14,
+                                top: 12,
+                                background: 'none',
+                                border: 'none',
+                                color: 'var(--text-muted)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                            title={showConfirmPassword ? "Hide password" : "Show password"}
+                        >
+                            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
+                </div>
+
+                {error && <p style={{ color: '#ff4444', fontSize: '0.9rem', margin: 0 }}>{error}</p>}
+                {message && <p style={{ color: '#00ff00', fontSize: '0.9rem', margin: 0 }}>{message}</p>}
+
+                <button
+                    type="submit"
+                    className={styles.saveBtn}
+                    disabled={loading}
+                    style={{ width: 'fit-content', opacity: loading ? 0.7 : 1 }}
+                >
+                    <Save size={18} style={{ marginRight: 8 }} />
+                    {loading ? "Saving Settings..." : "Save Credentials"}
+                </button>
+            </form>
         </div>
     );
 };

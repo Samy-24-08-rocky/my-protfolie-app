@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
     try {
         await dbConnect();
-        const items = await Settings.find({});
+        const items = await Settings.find({ key: { $ne: 'admin_credentials' } });
         // Reduce the array to a single key/value object that the frontend is expecting
         const mappedSettings = items.reduce((acc: any, curr: any) => {
             acc[curr.key] = curr.value;
