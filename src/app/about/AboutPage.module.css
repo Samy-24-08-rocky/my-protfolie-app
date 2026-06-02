@@ -1,0 +1,223 @@
+.hero {
+    padding: 160px 24px 80px;
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent 45%);
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.centerText {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Story and Vision Split */
+.storySection {
+    padding: 80px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.storyGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+.storyCard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.secTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--secondary);
+    letter-spacing: -0.01em;
+}
+
+.secText {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.visionCard {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 40px;
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.valueRow {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.iconBox {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-glow);
+    color: var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.valueTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 6px;
+}
+
+.valueText {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Team Grid */
+.teamSection {
+    padding: 80px 24px;
+}
+
+.teamGrid {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.teamCard {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 40px;
+    border-radius: var(--card-radius);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.teamCard:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px var(--primary-glow);
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background: var(--secondary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.memberName {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 4px;
+}
+
+.memberRole {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+}
+
+.memberDesc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Certification Grid */
+.certSection {
+    padding: 80px 24px;
+}
+
+.certGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.certCard {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 30px;
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.certIcon {
+    color: var(--primary);
+}
+
+.certCard h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.certCard p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .storyGrid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .certGrid {
+        grid-template-columns: 1fr;
+    }
+}

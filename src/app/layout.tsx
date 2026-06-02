@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToastProvider } from "@/components/Toast";
 
 export const metadata: Metadata = {
@@ -28,16 +27,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body>
-        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
-          <ToastProvider>
-            <CustomCursor />
-            <ScrollProgress />
-            {children}
-          </ToastProvider>
-        </ThemeProvider>
+        <ToastProvider>
+          <CustomCursor />
+          <ScrollProgress />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );
 }
+

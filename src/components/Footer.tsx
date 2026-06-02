@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Mail, Phone, MessageCircle, Instagram, Facebook, ArrowUpRight, MapPin } from "lucide-react";
 import styles from "./Footer.module.css";
+import Logo from "./Logo";
 
 const NAV_LINKS = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Contact", href: "#contact" },
+    { label: "Services", href: "/services" },
+    { label: "Portfolio", href: "/portfolio" },
+    { label: "About", href: "/about" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
 ];
 
 const SOCIALS = [
@@ -52,7 +52,7 @@ const Footer = () => {
             {/* Main footer */}
             <div className={styles.main}>
                 <div className={styles.brand}>
-                    <div className={styles.brandMark}>SG</div>
+                    <Logo size={40} />
                     <div>
                         <div className={styles.brandName}>Gill Tech Solutions India</div>
                         <p className={styles.brandDesc}>

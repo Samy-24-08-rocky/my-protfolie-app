@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
-import { CldImage } from 'next-cloudinary';
 import styles from "./Gallery.module.css";
 import { Reveal } from "./Reveal";
 import { useState, useEffect, useCallback } from "react";
@@ -23,8 +22,13 @@ const Gallery = () => {
             }
         };
         const getDefaults = () => [
-            { id: 1, type: "image", src: "/projects/ecommerce_dashboard.png", title: "E-Commerce Dashboard", category: "Web" },
-            { id: 2, type: "image", src: "/projects/fitness_tracker.png", title: "Fitness Tracker Demo", category: "Mobile" },
+            { id: 1, type: "image", src: "/projects/ecommerce_dashboard.png", title: "E-Commerce Dashboard", category: "Web Apps" },
+            { id: 2, type: "image", src: "/projects/fitness_tracker.png", title: "Fitness Tracker Mobile", category: "Mobile Apps" },
+            { id: 3, type: "image", src: "/projects/ecotrack_preview.png", title: "EcoTrack Environmental App", category: "Web Apps" },
+            { id: 4, type: "image", src: "/projects/nexus_preview.png", title: "Nexus Enterprise Portal", category: "Enterprise" },
+            { id: 5, type: "image", src: "/projects/gilltech_preview.png", title: "Gill Tech Agency Console", category: "Enterprise" },
+            { id: 6, type: "image", src: "/projects/mobile-app.png", title: "Hospitality Ordering App", category: "Mobile Apps" },
+            { id: 7, type: "image", src: "/projects/web-app.png", title: "Supply Chain Dispatcher Hub", category: "Web Apps" }
         ];
         fetchGallery();
     }, []);
@@ -106,8 +110,6 @@ const Gallery = () => {
                                 {item.src ? (
                                     item.type === "video" ? (
                                         <video src={item.src} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    ) : item.src.includes('res.cloudinary.com') ? (
-                                        <CldImage src={item.src} alt={item.title} width={600} height={450} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (
                                         <img src={item.src} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     )

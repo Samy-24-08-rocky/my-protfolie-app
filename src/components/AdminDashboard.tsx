@@ -23,7 +23,8 @@ import {
     Menu,
     Lock,
     Eye,
-    EyeOff
+    EyeOff,
+    Star
 } from "lucide-react";
 import styles from "./AdminDashboard.module.css";
 import Link from "next/link";
@@ -44,6 +45,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
         { id: "gallery", label: "Gallery", icon: <ImageIcon size={20} /> },
         { id: "skills", label: "Expertise", icon: <Code2 size={20} /> },
         { id: "messages", label: "Messages", icon: <Mail size={20} /> },
+        { id: "testimonials", label: "Testimonials", icon: <Star size={20} /> },
         { id: "maintenance", label: "Maintenance", icon: <ShieldCheck size={20} /> },
         { id: "security", label: "Security", icon: <Lock size={20} /> },
     ];
@@ -134,6 +136,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
                 {activeTab === "gallery" && <GalleryTab onSuccess={showSaveSuccess} />}
                 {activeTab === "skills" && <SkillsTab onSuccess={showSaveSuccess} />}
                 {activeTab === "messages" && <MessagesTab onSuccess={showSaveSuccess} />}
+                {activeTab === "testimonials" && <TestimonialsTab onSuccess={showSaveSuccess} />}
                 {activeTab === "maintenance" && <MaintenanceTab onSuccess={showSaveSuccess} />}
                 {activeTab === "security" && <SecurityTab onSuccess={showSaveSuccess} />}
             </main>
@@ -996,6 +999,385 @@ const SecurityTab = ({ onSuccess }: { onSuccess: () => void }) => {
                     {loading ? "Saving Settings..." : "Save Credentials"}
                 </button>
             </form>
+        </div>
+    );
+};
+
+const TestimonialsTab = ({ onSuccess }: { onSuccess: () => void }) => {
+    const [testimonials, setTestimonials] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editData, setEditData] = useState<any>({});
+    
+    const [newData, setNewData] = useState({
+        author: "",
+        role: "",
+        company: "",
+        quote: "",
+        stars: 5
+    });
+
+    const fetchTestimonials = async () => {
+        try {
+            const res = await fetch('/api/testimonials?admin=true');
+            if (res.ok) {
+                const data = await res.json();
+                setTestimonials(data);
+            }
+        } catch (error) {
+            console.error("Failed to fetch testimonials:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTestimonials();
+    }, []);
+
+    const handleSeedDefaults = async () => {
+        setLoading(true);
+        try {
+            const defaults = [
+                {
+                    stars: 5,
+                    quote: "Gill Tech Solutions delivered our Cafe POS app on time and exceeded expectations. Manual ordering operations were cut by 70% in the first two months.",
+                    author: "Gurpreet S. Gill",
+                    role: "Managing Director",
+                    company: "Gill Cafes & Hospitality",
+                    approved: true
+                },
+                {
+                    stars: 5,
+                    quote: "Their team was extremely professional in handling our healthcare portal rewrite. The HIPAA-compliant system is secure, lightning fast, and patients love the video check-ins.",
+                    author: "Dr. Amrit Pal Singh",
+                    role: "Director of Care",
+                    company: "CareHub Clinical Network",
+                    approved: true
+                },
+                {
+                    stars: 5,
+                    quote: "The ML-powered logistics telemetry system they built reduced our fleet's fuel consumption by 22%. Outstanding communication, agile delivery, and dedicated post-launch support.",
+                    author: "Rajesh Sharma",
+                    role: "Chief Technology Officer",
+                    company: "Sharma TransLogistics Ltd.",
+                    approved: true
+                },
+                {
+                    stars: 5,
+                    quote: "Incredible design aesthetics! They rebuilt our eCommerce storefront, integrated multiple payment gateways, and optimized our checkout flow. Sales conversions are up 45%.",
+                    author: "Meera Iyer",
+                    role: "E-Commerce Head",
+                    company: "Aura Artisan Retail",
+                    approved: true
+                }
+            ];
+
+            for (const item of defaults) {
+                await fetch('/api/testimonials', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(item)
+                });
+            }
+            fetchTestimonials();
+            onSuccess();
+        } catch (error) {
+            console.error("Failed to seed default testimonials:", error);
+            alert("Failed to import default testimonials.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleAdd = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!newData.author || !newData.quote) {
+            alert("Author and Quote are required fields.");
+            return;
+        }
+        setLoading(true);
+        try {
+            const res = await fetch('/api/testimonials', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...newData, approved: true })
+            });
+            if (res.ok) {
+                setNewData({ author: "", role: "", company: "", quote: "", stars: 5 });
+                fetchTestimonials();
+                onSuccess();
+            } else {
+                alert("Failed to add testimonial.");
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleApprove = async (id: string) => {
+        try {
+            const res = await fetch('/api/testimonials', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ _id: id, approved: true })
+            });
+            if (res.ok) {
+                fetchTestimonials();
+                onSuccess();
+            } else {
+                alert("Failed to approve testimonial.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this testimonial?")) return;
+        try {
+            const res = await fetch(`/api/testimonials?id=${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                fetchTestimonials();
+                onSuccess();
+            } else {
+                alert("Failed to delete testimonial.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const startEdit = (t: any) => {
+        setEditingId(t._id);
+        setEditData({ ...t });
+    };
+
+    const handleSaveEdit = async () => {
+        if (!editData.author || !editData.quote) {
+            alert("Author and Quote are required fields.");
+            return;
+        }
+        try {
+            const res = await fetch('/api/testimonials', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(editData)
+            });
+            if (res.ok) {
+                setEditingId(null);
+                fetchTestimonials();
+                onSuccess();
+            } else {
+                alert("Failed to update testimonial.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            {/* Add New Testimonial Form */}
+            <div className={styles.card}>
+                <h3 className={styles.cardTitle}><Star size={20} style={{ color: 'var(--primary)' }} /> Add New Testimonial</h3>
+                <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                        <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                            <label className={styles.label}>Author Name *</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                placeholder="e.g. John Doe"
+                                value={newData.author}
+                                onChange={e => setNewData({ ...newData, author: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                            <label className={styles.label}>Rating (Stars)</label>
+                            <select
+                                className={styles.input}
+                                value={newData.stars}
+                                onChange={e => setNewData({ ...newData, stars: Number(e.target.value) })}
+                                style={{ background: '#0a0a0a' }}
+                            >
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                        <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                            <label className={styles.label}>Role / Job Title</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                placeholder="e.g. CEO / Marketing Director"
+                                value={newData.role}
+                                onChange={e => setNewData({ ...newData, role: e.target.value })}
+                            />
+                        </div>
+                        <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                            <label className={styles.label}>Company Name</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                placeholder="e.g. TechCorp Solutions"
+                                value={newData.company}
+                                onChange={e => setNewData({ ...newData, company: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                        <label className={styles.label}>Quote / Testimonial Text *</label>
+                        <textarea
+                            className={styles.textarea}
+                            placeholder="Type the client's testimonial message here..."
+                            value={newData.quote}
+                            onChange={e => setNewData({ ...newData, quote: e.target.value })}
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className={styles.saveBtn}
+                        disabled={loading}
+                        style={{ width: 'fit-content', opacity: loading ? 0.7 : 1 }}
+                    >
+                        <Plus size={18} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+                        {loading ? "Adding Testimonial..." : "Add Testimonial"}
+                    </button>
+                </form>
+            </div>
+
+            {/* Testimonials List */}
+            <div>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '24px' }}>Existing Testimonials</h3>
+                {testimonials.length === 0 ? (
+                    <div className={styles.card} style={{ textAlign: 'center', padding: '40px' }}>
+                        <Star size={48} style={{ opacity: 0.2, marginBottom: '16px', color: 'var(--primary)' }} />
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>No testimonials found in the database. The website is currently displaying the fallback default reviews.</p>
+                        <button 
+                            className={styles.saveBtn} 
+                            onClick={handleSeedDefaults} 
+                            disabled={loading}
+                            style={{ margin: '0 auto' }}
+                        >
+                            {loading ? "Importing..." : "Import Default Website Testimonials to Database"}
+                        </button>
+                    </div>
+                ) : (
+                    <div className={styles.grid}>
+                        {testimonials.map((t) => (
+                            <div key={t._id} className={styles.miniCard} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '220px' }}>
+                                <div className={styles.miniCardActions}>
+                                    {editingId === t._id ? (
+                                        <button className={styles.iconBtn} onClick={() => setEditingId(null)}><X size={16} /></button>
+                                    ) : (
+                                        <button className={styles.iconBtn} onClick={() => startEdit(t)}><Edit2 size={16} /></button>
+                                    )}
+                                    <button className={styles.iconBtn} onClick={() => handleDelete(t._id)}><Trash2 size={16} /></button>
+                                </div>
+
+                                {editingId === t._id ? (
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+                                        <input
+                                            className={styles.input}
+                                            style={{ padding: '6px 10px', fontSize: '0.9rem' }}
+                                            placeholder="Author Name"
+                                            value={editData.author || ''}
+                                            onChange={(e) => setEditData({ ...editData, author: e.target.value })}
+                                        />
+                                        <input
+                                            className={styles.input}
+                                            style={{ padding: '6px 10px', fontSize: '0.9rem' }}
+                                            placeholder="Role"
+                                            value={editData.role || ''}
+                                            onChange={(e) => setEditData({ ...editData, role: e.target.value })}
+                                        />
+                                        <input
+                                            className={styles.input}
+                                            style={{ padding: '6px 10px', fontSize: '0.9rem' }}
+                                            placeholder="Company"
+                                            value={editData.company || ''}
+                                            onChange={(e) => setEditData({ ...editData, company: e.target.value })}
+                                        />
+                                        <select
+                                            className={styles.input}
+                                            style={{ padding: '6px 10px', fontSize: '0.9rem', background: '#0a0a0a' }}
+                                            value={editData.stars || 5}
+                                            onChange={e => setEditData({ ...editData, stars: Number(e.target.value) })}
+                                        >
+                                            <option value="5">5 Stars</option>
+                                            <option value="4">4 Stars</option>
+                                            <option value="3">3 Stars</option>
+                                            <option value="2">2 Stars</option>
+                                            <option value="1">1 Star</option>
+                                        </select>
+                                        <textarea
+                                            className={styles.textarea}
+                                            style={{ padding: '6px 10px', fontSize: '0.9rem', minHeight: '60px' }}
+                                            placeholder="Testimonial text..."
+                                            value={editData.quote || ''}
+                                            onChange={(e) => setEditData({ ...editData, quote: e.target.value })}
+                                        />
+                                        <button className={styles.saveBtn} style={{ padding: '6px 12px', fontSize: '0.9rem', marginTop: '8px' }} onClick={handleSaveEdit}>Save Changes</button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div style={{ marginBottom: '16px' }}>
+                                            <div style={{ display: 'flex', gap: '2px', marginBottom: '8px' }}>
+                                                {Array.from({ length: 5 }).map((_, idx) => (
+                                                    <Star
+                                                        key={idx}
+                                                        size={14}
+                                                        fill={idx < (t.stars || 5) ? "var(--primary)" : "none"}
+                                                        color={idx < (t.stars || 5) ? "var(--primary)" : "rgba(255,255,255,0.2)"}
+                                                    />
+                                                ))}
+                                            </div>
+                                            <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', fontStyle: 'italic', lineHeight: '1.5', margin: 0 }}>
+                                                "{t.quote}"
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 600 }}>{t.author}</h4>
+                                            {t.role || t.company ? (
+                                                <p style={{ margin: '2px 0 0 0', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                                                    {t.role}{t.role && t.company ? ' at ' : ''}{t.company}
+                                                </p>
+                                            ) : null}
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                                            {t.approved !== false ? (
+                                                <span style={{ fontSize: '0.75rem', color: '#00ff00', background: 'rgba(0,255,0,0.05)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(0,255,0,0.1)' }}>Approved</span>
+                                            ) : (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', justifyContent: 'space-between' }}>
+                                                    <span style={{ fontSize: '0.75rem', color: '#ff9900', background: 'rgba(255,153,0,0.05)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(255,153,0,0.1)' }}>Pending</span>
+                                                    <button 
+                                                        className={styles.saveBtn} 
+                                                        style={{ padding: '4px 10px', fontSize: '0.75rem', borderRadius: '6px' }}
+                                                        onClick={() => handleApprove(t._id)}
+                                                    >
+                                                        Approve
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

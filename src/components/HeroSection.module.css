@@ -1,0 +1,243 @@
+.heroWrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 140px 24px 80px;
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent 45%);
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.headline {
+    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--secondary);
+    letter-spacing: -0.02em;
+}
+
+.subheadline {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.ctaGroup {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.primaryCta {
+    padding: 16px 36px;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.25);
+    transition: all 0.3s ease;
+}
+
+.primaryCta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+    background: #1d4ed8;
+}
+
+.secondaryCta {
+    padding: 16px 36px;
+    background: transparent;
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    border: 1px solid var(--surface-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.secondaryCta:hover {
+    border-color: var(--secondary);
+    background: rgba(15, 23, 42, 0.02);
+}
+
+.trusted {
+    margin-top: 20px;
+}
+
+.trustedText {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.logoRow {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.logoRow span {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+}
+
+.logoRow span:hover {
+    opacity: 1;
+}
+
+/* Mockup Style */
+.mockupWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.mockupContainer {
+    width: 100%;
+    max-width: 480px;
+}
+
+.dashboardCard {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+}
+
+.dashboardHeader {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--surface-border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.windowDots {
+    display: flex;
+    gap: 6px;
+}
+
+.windowDots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.dashboardTitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+.dashboardBody {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.dbStatCard {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    padding: 14px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+:global([data-theme='dark']) .dbStatCard {
+    background: rgba(15, 23, 42, 0.4);
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.statValue {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.statTrend {
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+.chartWrapper {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 10px;
+    padding: 14px;
+    overflow: hidden;
+}
+
+:global([data-theme='dark']) .chartWrapper {
+    background: rgba(15, 23, 42, 0.4);
+}
+
+.chartSvg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 968px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .ctaGroup {
+        justify-content: center;
+    }
+    
+    .logoRow {
+        justify-content: center;
+    }
+    
+    .mockupContainer {
+        max-width: 420px;
+    }
+}

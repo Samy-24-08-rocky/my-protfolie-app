@@ -1,0 +1,147 @@
+.wrapper {
+    padding: 100px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-left: 20px;
+}
+
+.line {
+    position: absolute;
+    left: 48px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--surface-border);
+    z-index: 1;
+}
+
+.timelineItem {
+    position: relative;
+    display: flex;
+    gap: 32px;
+    z-index: 2;
+}
+
+.numBox {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.number {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0.6;
+    width: 20px;
+    text-align: right;
+}
+
+.circle {
+    width: 36px;
+    height: 36px;
+    background: var(--surface);
+    border: 1.5px solid var(--surface-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.timelineItem:hover .circle {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.icon {
+    transition: transform 0.3s ease;
+}
+
+.timelineItem:hover .icon {
+    transform: scale(1.1);
+}
+
+.content {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 24px 30px;
+    border-radius: var(--card-radius);
+    flex-grow: 1;
+    transition: all 0.3s ease;
+}
+
+.timelineItem:hover .content {
+    border-color: rgba(37, 99, 235, 0.15);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.03);
+}
+
+.stepTitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 8px;
+}
+
+.stepDesc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .line {
+        left: 28px;
+    }
+    
+    .timelineItem {
+        gap: 16px;
+    }
+    
+    .number {
+        display: none;
+    }
+    
+    .circle {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .content {
+        padding: 20px;
+    }
+}

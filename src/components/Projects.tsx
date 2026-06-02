@@ -1,11 +1,10 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, Tag } from "lucide-react";
-import { CldImage } from 'next-cloudinary';
 import styles from "./Projects.module.css";
 import { Reveal } from "./Reveal";
-import { useState, useEffect } from "react";
 
 const isVideoUrl = (url?: string) => {
     if (!url) return false;
@@ -69,8 +68,8 @@ const Projects = () => {
         fetchProjects();
     }, []);
 
-    const allTags = ["All", ...Array.from(new Set(projects.flatMap(p => p.tags || [])))];
-    const filtered = filter === "All" ? projects : projects.filter(p => p.tags?.includes(filter));
+    const allTags = ["All", ...Array.from(new Set(projects.flatMap((p: Project) => p.tags || [])))];
+    const filtered = filter === "All" ? projects : projects.filter((p: Project) => p.tags?.includes(filter));
 
     const fmtUrl = (url?: string) => {
         if (!url || url === "#") return "#";
@@ -93,7 +92,7 @@ const Projects = () => {
                 {/* Tag filter */}
                 {allTags.length > 1 && (
                     <div className={styles.filterRow}>
-                        {allTags.slice(0, 8).map(tag => (
+                        {allTags.slice(0, 8).map((tag: string) => (
                             <button
                                 key={tag}
                                 onClick={() => setFilter(tag)}
@@ -108,7 +107,7 @@ const Projects = () => {
 
             <div className={styles.grid}>
                 <AnimatePresence mode="popLayout">
-                    {filtered.map((p, i) => {
+                    {filtered.map((p: Project, i: number) => {
                         const accentColor = COLORS[i % COLORS.length];
                         return (
                             <motion.article
@@ -126,8 +125,6 @@ const Projects = () => {
                                     {p.image ? (
                                         isVideoUrl(p.image) ? (
                                             <video src={p.image} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                        ) : p.image.includes('res.cloudinary.com') ? (
-                                            <CldImage src={p.image} alt={p.title} width={800} height={480} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         ) : (
                                             // eslint-disable-next-line @next/next/no-img-element
                                             <img src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -148,7 +145,7 @@ const Projects = () => {
 
                                     <div className={styles.footer}>
                                         <div className={styles.tags}>
-                                            {p.tags?.slice(0, 3).map(t => (
+                                            {p.tags?.slice(0, 3).map((t: string) => (
                                                 <span key={t} className={styles.tag}>{t}</span>
                                             ))}
                                         </div>

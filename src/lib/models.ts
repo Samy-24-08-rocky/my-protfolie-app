@@ -25,11 +25,25 @@ const MessageSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     mobile: { type: String },
-    subject: { type: String, required: true },
-    message: { type: String, required: true },
+    subject: { type: String },
+    message: { type: String },
+    company: { type: String },
+    budget: { type: String },
+    details: { type: String },
 }, { timestamps: true });
 
 export const Project = mongoose.models.Project || mongoose.model('Project', ProjectSchema);
 export const GalleryItem = mongoose.models.GalleryItem || mongoose.model('GalleryItem', GallerySchema);
 export const Settings = mongoose.models.Settings || mongoose.model('Settings', SettingsSchema);
 export const Message = mongoose.models.Message || mongoose.model('Message', MessageSchema);
+
+const TestimonialSchema = new mongoose.Schema({
+    author: { type: String, required: true },
+    role: { type: String },
+    company: { type: String },
+    quote: { type: String, required: true },
+    stars: { type: Number, default: 5 },
+    approved: { type: Boolean, default: false },
+}, { timestamps: true });
+
+export const Testimonial = mongoose.models.Testimonial || mongoose.model('Testimonial', TestimonialSchema);

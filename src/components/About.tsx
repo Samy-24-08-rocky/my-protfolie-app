@@ -61,7 +61,7 @@ const About = () => {
                         <div className={styles.techSection}>
                             <h4 className={styles.techTitle}>Core Technologies</h4>
                             <div className={styles.techRow}>
-                                {TECH.map(t => (
+                                {TECH.map((t: string) => (
                                     <span key={t} className={styles.techBadge}>{t}</span>
                                 ))}
                             </div>

@@ -1,0 +1,330 @@
+.wrapper {
+    padding: 100px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Mockup styling inside project card */
+.visualWrapper {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-bottom: 1px solid var(--surface-border);
+    overflow: hidden;
+}
+
+/* Cafe POS styling */
+.cafeMockup {
+    width: 160px;
+    background: var(--background);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.posHeader {
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.activeLed {
+    width: 6px;
+    height: 6px;
+    background: #27C93F;
+    border-radius: 50%;
+}
+
+.posGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.posItem {
+    border: 1px dashed var(--surface-border);
+    border-radius: 4px;
+    padding: 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.55rem;
+}
+
+.posImg {
+    font-size: 0.8rem;
+}
+
+.posReceipt {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 2px;
+}
+
+.receiptLine {
+    height: 3px;
+    background: var(--text-muted);
+    opacity: 0.3;
+    border-radius: 2px;
+    width: 80%;
+}
+
+/* Health styling */
+.healthMockup {
+    width: 160px;
+    background: var(--background);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.healthHeader {
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.healthPulse {
+    width: 6px;
+    height: 6px;
+    background: #10B981;
+    border-radius: 50%;
+}
+
+.healthGraph {
+    height: 50px;
+    border: 1px solid var(--surface-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sparkSvg {
+    width: 100%;
+    height: 100%;
+}
+
+.healthInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Logistics styling */
+.logisticsMockup {
+    width: 160px;
+    background: var(--background);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mapGrid {
+    position: relative;
+    height: 70px;
+    background: rgba(249, 115, 22, 0.04);
+    border: 1px solid var(--surface-border);
+    border-radius: 4px;
+}
+
+.mapPin {
+    position: absolute;
+    font-size: 0.8rem;
+    transform: translate(-50%, -50%);
+}
+
+.mapRoute {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logisticsConsole {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #F97316;
+    text-align: center;
+}
+
+/* Details Section */
+.details {
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.metaRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.industry {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+}
+
+.projectTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+
+.projectDesc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.techRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+}
+
+.techTag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    background: rgba(148, 163, 184, 0.08);
+    color: var(--text-muted);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+:global([data-theme='dark']) .techTag {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.projectLink {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s ease;
+}
+
+.projectLink:hover {
+    color: var(--primary);
+}
+
+.footerCta {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.viewAllBtn {
+    padding: 14px 32px;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.viewAllBtn:hover {
+    background: var(--secondary);
+    color: var(--background);
+}
+
+@media (max-width: 968px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

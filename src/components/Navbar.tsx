@@ -3,27 +3,23 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 import styles from "./Navbar.module.css";
+import Logo from "./Logo";
 
 const NAV_LINKS = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Gallery", href: "#gallery" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/#home" },
+    { name: "About", href: "/#about" },
+    { name: "Skills", href: "/#skills" },
+    { name: "Projects", href: "/#projects" },
+    { name: "Gallery", href: "/#gallery" },
+    { name: "Contact", href: "/#contact" },
 ];
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
     const [active, setActive] = useState("home");
-
-    useEffect(() => { setMounted(true); }, []);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -33,18 +29,43 @@ const Navbar = () => {
 
     // Track active section via intersection
     useEffect(() => {
-        const sections = NAV_LINKS.map(l => document.querySelector(l.href));
+        const sections = NAV_LINKS.map(l => {
+            const hashIndex = l.href.indexOf("#");
+            if (hashIndex !== -1) {
+                return document.getElementById(l.href.slice(hashIndex + 1));
+            }
+            return null;
+        }).filter(Boolean);
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) setActive(entry.target.id);
+                    if (entry.isIntersecting) {
+                        setActive(entry.target.id);
+                    }
                 });
             },
-            { threshold: 0.35 }
+            { threshold: 0.25, rootMargin: "-80px 0px -40% 0px" }
         );
         sections.forEach(s => s && observer.observe(s));
         return () => observer.disconnect();
     }, []);
+
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        if (typeof window !== "undefined" && window.location.pathname === "/") {
+            const hashIndex = href.indexOf("#");
+            if (hashIndex !== -1) {
+                const id = href.slice(hashIndex + 1);
+                const el = document.getElementById(id);
+                if (el) {
+                    e.preventDefault();
+                    el.scrollIntoView({ behavior: "smooth" });
+                    setActive(id);
+                    setMobileMenuOpen(false);
+                }
+            }
+        }
+    };
 
     return (
         <motion.nav
@@ -56,44 +77,43 @@ const Navbar = () => {
             <div className={styles.inner}>
                 {/* Logo */}
                 <Link href="/" className={styles.logo}>
-                    <span className={styles.logoMark}>SG</span>
+                    <Logo size={32} />
                     <span className={styles.logoText}>Gill Tech</span>
                 </Link>
 
                 {/* Desktop Links */}
                 <ul className={styles.links}>
-                    {NAV_LINKS.map(link => (
-                        <li key={link.name}>
-                            <Link
-                                href={link.href}
-                                className={`${styles.link} ${active === link.href.slice(1) ? styles.linkActive : ""}`}
-                            >
-                                {link.name}
-                                {active === link.href.slice(1) && (
-                                    <motion.span
-                                        layoutId="nav-pill"
-                                        className={styles.activePill}
-                                    />
-                                )}
-                            </Link>
-                        </li>
-                    ))}
+                    {NAV_LINKS.map(link => {
+                        const hashIndex = link.href.indexOf("#");
+                        const linkId = hashIndex !== -1 ? link.href.slice(hashIndex + 1) : "";
+                        return (
+                            <li key={link.name}>
+                                <Link
+                                    href={link.href}
+                                    onClick={(e) => handleNavClick(e, link.href)}
+                                    className={`${styles.link} ${active === linkId ? styles.linkActive : ""}`}
+                                >
+                                    {link.name}
+                                    {active === linkId && (
+                                        <motion.span
+                                            layoutId="nav-pill"
+                                            className={styles.activePill}
+                                        />
+                                    )}
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
 
                 {/* Right actions */}
                 <div className={styles.actions}>
-                    {mounted && (
-                        <button
-                            id="theme-toggle"
-                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                            className={styles.themeBtn}
-                            aria-label="Toggle theme"
-                        >
-                            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-                        </button>
-                    )}
-                    <Link href="#contact" className={styles.hireBtn}>
-                        Hire Me
+                    <Link 
+                        href="/#contact" 
+                        onClick={(e) => handleNavClick(e, "/#contact")} 
+                        className={styles.hireBtn}
+                    >
+                        Get Free Consultation
                     </Link>
                     <button
                         id="mobile-menu-toggle"
@@ -117,36 +137,40 @@ const Navbar = () => {
                         transition={{ duration: 0.3 }}
                         className={styles.mobileMenu}
                     >
-                        {NAV_LINKS.map((link, i) => (
-                            <motion.div
-                                key={link.name}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.06 }}
-                            >
-                                <Link
-                                    href={link.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className={`${styles.mobileLink} ${active === link.href.slice(1) ? styles.mobileLinkActive : ""}`}
+                        {NAV_LINKS.map((link, i) => {
+                            const hashIndex = link.href.indexOf("#");
+                            const linkId = hashIndex !== -1 ? link.href.slice(hashIndex + 1) : "";
+                            return (
+                                <motion.div
+                                    key={link.name}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.06 }}
                                 >
-                                    {link.name}
-                                </Link>
-                            </motion.div>
-                        ))}
+                                    <Link
+                                        href={link.href}
+                                        onClick={(e) => handleNavClick(e, link.href)}
+                                        className={`${styles.mobileLink} ${active === linkId ? styles.mobileLinkActive : ""}`}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </motion.div>
+                            );
+                        })}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.36 }}
-                            style={{ display: "flex", gap: "12px", padding: "16px 24px 24px" }}
+                            style={{ padding: "16px 24px 24px" }}
                         >
-                            <Link href="#contact" onClick={() => setMobileMenuOpen(false)} className={styles.hireBtn} style={{ flex: 1, textAlign: "center" }}>
-                                Hire Me
+                            <Link 
+                                href="/#contact" 
+                                onClick={(e) => handleNavClick(e, "/#contact")} 
+                                className={styles.hireBtn} 
+                                style={{ display: "block", textAlign: "center" }}
+                            >
+                                Get Free Consultation
                             </Link>
-                            {mounted && (
-                                <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className={styles.themeBtn} aria-label="Toggle theme">
-                                    {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-                                </button>
-                            )}
                         </motion.div>
                     </motion.div>
                 )}
@@ -156,3 +180,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

@@ -1,0 +1,185 @@
+.hero {
+    padding: 160px 24px 80px;
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent 45%);
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.centerText {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Tab Filter Row */
+.tabRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding: 0 24px;
+    flex-wrap: wrap;
+}
+
+.tabBtn {
+    padding: 10px 20px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.tabBtn:hover {
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.activeTab {
+    background: var(--secondary);
+    color: var(--background) !important;
+    border-color: var(--secondary);
+}
+
+/* Projects Listing */
+.projectsSection {
+    padding: 0 24px 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.projectsList {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.projectItem {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    border-bottom: 1px solid var(--surface-border);
+    padding-bottom: 80px;
+}
+
+.projectItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.itemMeta {
+    border-left: 4px solid var(--primary);
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.industry {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.projectTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--secondary);
+    letter-spacing: -0.01em;
+}
+
+.projectDesc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+.techRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.techTag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: rgba(148, 163, 184, 0.08);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+:global([data-theme='dark']) .techTag {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Case Study details grid */
+.caseGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.caseBox {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 24px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.caseBox h5 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.caseBox p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+@media (max-width: 968px) {
+    .caseGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .projectItem {
+        gap: 24px;
+        padding-bottom: 60px;
+    }
+}

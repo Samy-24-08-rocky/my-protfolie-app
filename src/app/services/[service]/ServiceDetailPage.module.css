@@ -1,0 +1,205 @@
+.hero {
+    padding: 160px 24px 80px;
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent 45%);
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.backLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.backLink:hover {
+    color: var(--primary);
+}
+
+.title {
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+/* Details Section Split Layout */
+.detailsSection {
+    padding: 80px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.detailsGrid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.copyCol {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary);
+    letter-spacing: -0.01em;
+}
+
+.detailPara {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-main);
+}
+
+/* Sidebar and features card */
+.featuresCol {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    position: sticky;
+    top: 100px;
+}
+
+.featuresCard {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 30px;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.featuresTitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--surface-border);
+    padding-bottom: 12px;
+}
+
+.featuresList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.featureItem {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-main);
+}
+
+.featureIcon {
+    color: #10B981;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.adCard {
+    background: var(--secondary);
+    color: white;
+    padding: 30px;
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+.adIcon {
+    color: var(--primary);
+}
+
+.adCard h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.adCard p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+.adCta {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+}
+
+.adCta:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Not Found Style */
+.notFound {
+    padding: 200px 24px;
+    text-align: center;
+}
+
+.notFound h2 {
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-bottom: 20px;
+}
+
+.backBtn {
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+@media (max-width: 968px) {
+    .detailsGrid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .featuresCol {
+        position: relative;
+        top: 0;
+    }
+}
