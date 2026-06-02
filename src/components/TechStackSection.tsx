@@ -14,6 +14,9 @@ const techItems = [
     { name: ".NET", category: "Backend & Database", desc: "Enterprise robust backend APIs" },
     { name: "PostgreSQL", category: "Backend & Database", desc: "Relational database engines" },
     { name: "MySQL", category: "Backend & Database", desc: "Structured data storage" },
+    { name: "Firebase", category: "Backend & Database", desc: "Serverless backend & database" },
+    { name: "SQLite", category: "Backend & Database", desc: "Lightweight embedded database" },
+    { name: "Neon", category: "Backend & Database", desc: "Serverless Postgres database" },
     { name: "AWS", category: "Cloud & DevOps", desc: "Flexible cloud infrastructure" },
     { name: "Azure", category: "Cloud & DevOps", desc: "Enterprise cloud integrations" }
 ];

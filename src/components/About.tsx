@@ -6,7 +6,7 @@ import { Award, Globe, Code2, Smartphone, Signature } from "lucide-react";
 import styles from "./About.module.css";
 import { Reveal } from "./Reveal";
 
-const TECH = ["React", "Next.js", "TypeScript", "Node.js", "Flutter", "Java", "MongoDB", "Firebase", "Android", "PostgreSQL"];
+const TECH = ["React", "Next.js", "TypeScript", "Node.js", "Flutter", "Java", "MongoDB", "Firebase", "SQLite", "Neon", "Android", "PostgreSQL"];
 
 const stats = [
     { icon: <Award size={18} />, value: 3, suffix: "+", label: "Years Experience" },

@@ -32,7 +32,7 @@ const SKILLS = [
         icon: <Database size={24} />,
         title: "Databases",
         desc: "Designing and managing SQL & NoSQL databases with a focus on performance and data integrity.",
-        tags: ["MongoDB", "PostgreSQL", "MySQL", "Firebase Firestore"],
+        tags: ["MongoDB", "PostgreSQL", "MySQL", "Firebase Firestore", "SQLite", "Neon"],
         color: "#6366F1", // Indigo
     },
     {
