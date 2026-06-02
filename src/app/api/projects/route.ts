@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Project } from '@/lib/models';
+import { verifySession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +17,11 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const data = await request.json();
         await dbConnect();
         const newItem = await Project.create(data);
@@ -27,6 +33,11 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const data = await request.json();
         const { _id, ...updateData } = data;
         await dbConnect();
@@ -43,6 +54,11 @@ export async function PUT(request: Request) {
 
 export async function DELETE(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
         await dbConnect();
@@ -52,3 +68,4 @@ export async function DELETE(request: Request) {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
+

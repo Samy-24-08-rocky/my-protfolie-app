@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
+import { verifySession } from '@/lib/auth';
 
 // Configure Cloudinary with your backend secrets
 cloudinary.config({
@@ -10,6 +11,11 @@ cloudinary.config({
 
 export async function GET() {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const timestamp = Math.round(new Date().getTime() / 1000);
 
         // Parameters that need to be signed
@@ -34,3 +40,4 @@ export async function GET() {
         return NextResponse.json({ error: 'Signature failed', details: error?.message }, { status: 500 });
     }
 }
+

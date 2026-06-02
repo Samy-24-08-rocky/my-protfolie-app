@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Settings } from '@/lib/models';
+import { verifySession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,8 +23,17 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const data = await request.json();
-        // data expects { key: 'branding', value: { ... } }
+        // Prevent privilege escalation
+        if (data.key === 'admin_credentials') {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+        }
+
         await dbConnect();
 
         // Upsert setting key
@@ -38,3 +48,4 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
+

@@ -11,23 +11,35 @@ export default function AdminPage() {
     const router = useRouter();
 
     useEffect(() => {
-        const auth = localStorage.getItem("admin_auth");
-        if (auth === "true") {
-            setIsAuthenticated(true);
-        }
-        setIsChecking(false);
+        const checkAuth = async () => {
+            try {
+                const res = await fetch("/api/admin/check");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success) {
+                        setIsAuthenticated(true);
+                    }
+                }
+            } catch (err) {
+                console.error("Auth check failed:", err);
+            } finally {
+                setIsChecking(false);
+            }
+        };
+        checkAuth();
     }, []);
 
     const handleLogin = (status: boolean) => {
         setIsAuthenticated(status);
-        if (status) {
-            localStorage.setItem("admin_auth", "true");
-        }
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        try {
+            await fetch("/api/admin/logout", { method: "POST" });
+        } catch (err) {
+            console.error("Logout failed:", err);
+        }
         setIsAuthenticated(false);
-        localStorage.removeItem("admin_auth");
         router.push("/");
     };
 
@@ -43,3 +55,4 @@ export default function AdminPage() {
         </main>
     );
 }
+

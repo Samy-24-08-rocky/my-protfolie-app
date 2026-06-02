@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Testimonial } from '@/lib/models';
+import { verifySession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,8 +21,12 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const data = await request.json();
+        
+        // Force public submissions to be unapproved by default
+        const submissionData = { ...data, approved: false };
+        
         await dbConnect();
-        const newItem = await Testimonial.create(data);
+        const newItem = await Testimonial.create(submissionData);
         return NextResponse.json(newItem);
     } catch {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
@@ -30,6 +35,11 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const data = await request.json();
         const { _id, ...updateData } = data;
         await dbConnect();
@@ -46,6 +56,11 @@ export async function PUT(request: Request) {
 
 export async function DELETE(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
         await dbConnect();
@@ -55,3 +70,4 @@ export async function DELETE(request: Request) {
         return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
+
