@@ -17,6 +17,9 @@ const techItems = [
     { name: "Firebase", category: "Backend & Database", desc: "Serverless backend & database" },
     { name: "SQLite", category: "Backend & Database", desc: "Lightweight embedded database" },
     { name: "Neon", category: "Backend & Database", desc: "Serverless Postgres database" },
+    { name: "Java", category: "Backend & Database", desc: "Enterprise backend development" },
+    { name: "MongoDB", category: "Backend & Database", desc: "Document-based NoSQL database" },
+    { name: "MERN Stack", category: "Backend & Database", desc: "Full-stack JavaScript apps" },
     { name: "AWS", category: "Cloud & DevOps", desc: "Flexible cloud infrastructure" },
     { name: "Azure", category: "Cloud & DevOps", desc: "Enterprise cloud integrations" }
 ];
