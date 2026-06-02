@@ -90,6 +90,22 @@ const serviceContent = {
             "We integrate APIs from OpenAI, Anthropic, and open-source models (like Llama) to construct intelligent agents. By implementing vector databases and embedding search layers, these models retrieve facts from your business documentation, eliminating hallucinations and ensuring accurate customer communication.",
             "We prioritize security above all. All data is processed using private APIs, ensuring your business credentials, client chats, and proprietary procedures are never leaked or used to train public models."
         ]
+    },
+    "digital-marketing": {
+        title: "Digital Marketing & SEO Solutions",
+        subtitle: "Maximize your online presence, drive organic traffic, and acquire customers through targeted campaigns.",
+        tagline: "Engage Your Target Audience and Drive Conversions",
+        features: [
+            "Advanced SEO audits, keyword research, and on-page optimization.",
+            "Social Media Marketing (SMM) and content generation strategies.",
+            "High-ROI PPC ad campaigns on Google Search, Meta, and LinkedIn.",
+            "Comprehensive analytics dashboards and conversion tracking pipelines."
+        ],
+        details: [
+            "Building high-performance software systems is just the first step. To generate revenue, your products need to be discoverable. At Gill Tech Solutions, we combine software engineering expertise with data-driven marketing strategies to help your brand rank higher on Google Search and acquire new users.",
+            "Our team structures optimization campaigns around your target audience. We optimize metadata, improve loading speed, write semantic schema structures, and implement high-authority backlinks. As a result, search engine crawlers rank your web applications higher, driving organic traffic directly to your portals.",
+            "We also design, configure, and manage paid ad funnels. We focus on search intent, lower acquisition costs, and run continuous conversion experiments (A/B tests). This ensures every dollar you spend on advertising delivers transparent, measurable returns."
+        ]
     }
 };
 

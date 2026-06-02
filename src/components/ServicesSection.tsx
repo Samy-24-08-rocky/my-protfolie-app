@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Globe, Smartphone, Settings, Bot, ShoppingBag, Palette, ArrowRight } from "lucide-react";
+import { Globe, Smartphone, Settings, Bot, ShoppingBag, Palette, ArrowRight, Megaphone } from "lucide-react";
 import styles from "./ServicesSection.module.css";
 
 const services = [
@@ -41,6 +41,12 @@ const services = [
         title: "UI/UX Design",
         desc: "Stunning user research, wireframes, visual prototypes, and layouts designed to engage and convert.",
         href: "/services/website-development" // Fallback/route to UI/UX
+    },
+    {
+        icon: Megaphone,
+        title: "Digital Marketing",
+        desc: "Data-driven SEO, search campaigns, social media management, and content strategies to maximize online growth.",
+        href: "/services/digital-marketing"
     }
 ];
 
