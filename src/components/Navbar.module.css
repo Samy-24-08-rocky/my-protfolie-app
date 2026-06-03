@@ -58,11 +58,29 @@
     box-shadow: 0 0 15px var(--primary-glow);
 }
 
-.logoText {
-    font-size: 1.1rem;
-    font-weight: 600;
+.logoTextContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.logoTextMain {
+    font-size: 1.15rem;
+    font-weight: 700;
     color: var(--text-main);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    font-family: var(--font-heading);
+}
+
+.logoTextSub {
+    font-size: 0.48rem;
+    font-weight: 600;
+    color: #B4905A; /* Brand Gold */
+    letter-spacing: 0.14em;
+    line-height: 1;
+    font-family: var(--font-body);
     text-transform: uppercase;
 }
 

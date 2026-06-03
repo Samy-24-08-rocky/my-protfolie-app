@@ -52,9 +52,10 @@ const Footer = () => {
             {/* Main footer */}
             <div className={styles.main}>
                 <div className={styles.brand}>
-                    <Logo size={40} />
-                    <div>
-                        <div className={styles.brandName}>Gill Tech Solutions India</div>
+                    <Logo size={48} />
+                    <div className={styles.brandTextContainer}>
+                        <div className={styles.brandNameMain}>GILLTECH</div>
+                        <div className={styles.brandNameSub}>SOLUTIONS INDIA</div>
                         <p className={styles.brandDesc}>
                             Crafting high-performance digital products with modern technologies and thoughtful design.
                         </p>

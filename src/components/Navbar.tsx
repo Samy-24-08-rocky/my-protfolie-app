@@ -78,8 +78,11 @@ const Navbar = () => {
             <div className={styles.inner}>
                 {/* Logo */}
                 <Link href="/" className={styles.logo}>
-                    <Logo size={32} />
-                    <span className={styles.logoText}>Gill Tech</span>
+                    <Logo size={36} />
+                    <div className={styles.logoTextContainer}>
+                        <span className={styles.logoTextMain}>GILLTECH</span>
+                        <span className={styles.logoTextSub}>SOLUTIONS INDIA</span>
+                    </div>
                 </Link>
 
                 {/* Desktop Links */}
