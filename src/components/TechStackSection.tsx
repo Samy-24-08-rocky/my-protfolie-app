@@ -15,6 +15,7 @@ const techItems = [
     { name: "PostgreSQL", category: "Backend & Database", desc: "Relational database engines" },
     { name: "MySQL", category: "Backend & Database", desc: "Structured data storage" },
     { name: "Firebase", category: "Backend & Database", desc: "Serverless backend & database" },
+    { name: "Supabase", category: "Backend & Database", desc: "Open-source Firebase alternative" },
     { name: "SQLite", category: "Backend & Database", desc: "Lightweight embedded database" },
     { name: "Neon", category: "Backend & Database", desc: "Serverless Postgres database" },
     { name: "Java", category: "Backend & Database", desc: "Enterprise backend development" },
