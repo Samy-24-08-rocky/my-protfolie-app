@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import styles from "./Navbar.module.css";
 import Logo from "./Logo";
-import { openCalendly } from "./GlobalCalendly";
+const WHATSAPP_URL = "https://wa.me/918264888290?text=Hello%20Gill%20Tech%20Solutions%2C%20I%20would%20like%20to%20inquire%20about%20a%20free%20consultation%20for%20my%20project.";
 
 const NAV_LINKS = [
     { name: "Home", href: "/#home" },
@@ -109,12 +109,14 @@ const Navbar = () => {
 
                 {/* Right actions */}
                 <div className={styles.actions}>
-                    <button 
-                        onClick={openCalendly} 
+                    <a 
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={styles.hireBtn}
                     >
                         Get Free Consultation
-                    </button>
+                    </a>
                     <button
                         id="mobile-menu-toggle"
                         className={styles.mobileToggle}
@@ -163,16 +165,16 @@ const Navbar = () => {
                             transition={{ delay: 0.36 }}
                             style={{ padding: "16px 24px 24px" }}
                         >
-                            <button 
-                                onClick={() => {
-                                    setMobileMenuOpen(false);
-                                    openCalendly();
-                                }} 
+                            <a 
+                                href={WHATSAPP_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setMobileMenuOpen(false)}
                                 className={styles.hireBtn} 
                                 style={{ display: "block", textAlign: "center", width: "100%" }}
                             >
                                 Get Free Consultation
-                            </button>
+                            </a>
                         </motion.div>
                     </motion.div>
                 )}

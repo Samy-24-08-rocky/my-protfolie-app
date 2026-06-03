@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "./HeroSection.module.css";
-import { openCalendly } from "./GlobalCalendly";
+const WHATSAPP_URL = "https://wa.me/918264888290?text=Hello%20Gill%20Tech%20Solutions%2C%20I%20would%20like%20to%20inquire%20about%20a%20free%20consultation%20for%20my%20project.";
 
 const HeroSection = () => {
     return (
@@ -30,9 +30,14 @@ const HeroSection = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <button onClick={openCalendly} className={styles.primaryCta}>
+                        <a 
+                            href={WHATSAPP_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.primaryCta}
+                        >
                             Get Free Consultation
-                        </button>
+                        </a>
                         <Link href="/portfolio" className={styles.secondaryCta}>
                             View Our Work
                         </Link>
