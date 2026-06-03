@@ -3,12 +3,9 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "./HeroSection.module.css";
+import { openCalendly } from "./GlobalCalendly";
 
-interface HeroSectionProps {
-    onBookClick: () => void;
-}
-
-const HeroSection = ({ onBookClick }: HeroSectionProps) => {
+const HeroSection = () => {
     return (
         <section id="home" className={styles.heroWrapper}>
             <div className={styles.container}>
@@ -33,7 +30,7 @@ const HeroSection = ({ onBookClick }: HeroSectionProps) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <button onClick={onBookClick} className={styles.primaryCta}>
+                        <button onClick={openCalendly} className={styles.primaryCta}>
                             Get Free Consultation
                         </button>
                         <Link href="/portfolio" className={styles.secondaryCta}>

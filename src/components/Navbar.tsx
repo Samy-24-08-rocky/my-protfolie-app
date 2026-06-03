@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import styles from "./Navbar.module.css";
 import Logo from "./Logo";
+import { openCalendly } from "./GlobalCalendly";
 
 const NAV_LINKS = [
     { name: "Home", href: "/#home" },
@@ -52,6 +53,7 @@ const Navbar = () => {
     }, []);
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        setMobileMenuOpen(false);
         if (typeof window !== "undefined" && window.location.pathname === "/") {
             const hashIndex = href.indexOf("#");
             if (hashIndex !== -1) {
@@ -61,7 +63,6 @@ const Navbar = () => {
                     e.preventDefault();
                     el.scrollIntoView({ behavior: "smooth" });
                     setActive(id);
-                    setMobileMenuOpen(false);
                 }
             }
         }
@@ -108,13 +109,12 @@ const Navbar = () => {
 
                 {/* Right actions */}
                 <div className={styles.actions}>
-                    <Link 
-                        href="/#contact" 
-                        onClick={(e) => handleNavClick(e, "/#contact")} 
+                    <button 
+                        onClick={openCalendly} 
                         className={styles.hireBtn}
                     >
                         Get Free Consultation
-                    </Link>
+                    </button>
                     <button
                         id="mobile-menu-toggle"
                         className={styles.mobileToggle}
@@ -163,14 +163,16 @@ const Navbar = () => {
                             transition={{ delay: 0.36 }}
                             style={{ padding: "16px 24px 24px" }}
                         >
-                            <Link 
-                                href="/#contact" 
-                                onClick={(e) => handleNavClick(e, "/#contact")} 
+                            <button 
+                                onClick={() => {
+                                    setMobileMenuOpen(false);
+                                    openCalendly();
+                                }} 
                                 className={styles.hireBtn} 
-                                style={{ display: "block", textAlign: "center" }}
+                                style={{ display: "block", textAlign: "center", width: "100%" }}
                             >
                                 Get Free Consultation
-                            </Link>
+                            </button>
                         </motion.div>
                     </motion.div>
                 )}

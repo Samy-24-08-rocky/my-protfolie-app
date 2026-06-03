@@ -3,6 +3,7 @@ import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
 import { ToastProvider } from "@/components/Toast";
+import GlobalCalendly from "@/components/GlobalCalendly";
 
 export const metadata: Metadata = {
   title: "Sumit Gill | Full-Stack Developer & Software Engineer",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ToastProvider>
           <CustomCursor />
           <ScrollProgress />
+          <GlobalCalendly />
           {children}
         </ToastProvider>
       </body>
