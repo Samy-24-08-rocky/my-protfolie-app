@@ -103,22 +103,22 @@ const LeadFormSection = () => {
                                 <div className={styles.row}>
                                     <div className={styles.field}>
                                         <label className={styles.label}>Name *</label>
-                                        <input name="name" type="text" className={styles.input} placeholder="Sumit Gill" required />
+                                        <input name="name" type="text" className={styles.input} placeholder="" required />
                                     </div>
                                     <div className={styles.field}>
                                         <label className={styles.label}>Email *</label>
-                                        <input name="email" type="email" className={styles.input} placeholder="name@company.com" required />
+                                        <input name="email" type="email" className={styles.input} placeholder="" required />
                                     </div>
                                 </div>
 
                                 <div className={styles.row}>
                                     <div className={styles.field}>
                                         <label className={styles.label}>Phone *</label>
-                                        <input name="mobile" type="tel" className={styles.input} placeholder="+91 XXXXX XXXXX" required />
+                                        <input name="mobile" type="tel" className={styles.input} placeholder="" required />
                                     </div>
                                     <div className={styles.field}>
                                         <label className={styles.label}>Company Name</label>
-                                        <input name="company" type="text" className={styles.input} placeholder="e.g. Gill Tech Solutions" />
+                                        <input name="company" type="text" className={styles.input} placeholder="" />
                                     </div>
                                 </div>
 
@@ -129,7 +129,7 @@ const LeadFormSection = () => {
                                         name="details" 
                                         className={styles.textarea} 
                                         rows={4} 
-                                        placeholder="Describe your project, app, target features, timelines, or constraints..." 
+                                        placeholder="" 
                                         required 
                                     />
                                 </div>

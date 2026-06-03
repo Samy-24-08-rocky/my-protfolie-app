@@ -119,7 +119,7 @@ const Contact = () => {
                         <div className={styles.row}>
                             <div className={styles.field}>
                                 <label className={styles.label}>Full Name *</label>
-                                <input id="contact-name" name="name" type="text" className={styles.input} placeholder="Sumit Gill" required />
+                                <input id="contact-name" name="name" type="text" className={styles.input} placeholder="" required />
                             </div>
                             <div className={styles.field}>
                                 <label className={styles.label}>Email *</label>
@@ -129,16 +129,16 @@ const Contact = () => {
                         <div className={styles.row}>
                             <div className={styles.field}>
                                 <label className={styles.label}>Mobile</label>
-                                <input id="contact-mobile" name="mobile" type="tel" className={styles.input} placeholder="+91" />
+                                <input id="contact-mobile" name="mobile" type="tel" className={styles.input} placeholder="" />
                             </div>
                             <div className={styles.field}>
                                 <label className={styles.label}>Subject *</label>
-                                <input id="contact-subject" name="subject" type="text" className={styles.input} placeholder="Project Inquiry" required />
+                                <input id="contact-subject" name="subject" type="text" className={styles.input} placeholder="" required />
                             </div>
                         </div>
                         <div className={styles.field}>
                             <label className={styles.label}>Message *</label>
-                            <textarea id="contact-message" name="message" className={styles.textarea} rows={5} placeholder="Tell me about your project..." required />
+                            <textarea id="contact-message" name="message" className={styles.textarea} rows={5} placeholder="" required />
                         </div>
                         <button id="contact-submit" type="submit" className={styles.submitBtn} disabled={sending}>
                             {sending ? "Sending…" : <>Send Message <Send size={16} /></>}
