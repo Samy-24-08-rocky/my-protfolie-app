@@ -112,8 +112,8 @@ const Footer = () => {
                 <p>© {year} Sumit Gill · Gill Tech Solutions India. All rights reserved.</p>
                 <div className={styles.bottomLinks}>
                     <Link href="/admin" className={styles.bottomLink}>Admin Panel</Link>
-                    <a href="#" className={styles.bottomLink} onClick={e => { e.preventDefault(); alert("Privacy Policy coming soon."); }}>Privacy</a>
-                    <a href="#" className={styles.bottomLink} onClick={e => { e.preventDefault(); alert("Terms coming soon."); }}>Terms</a>
+                    <Link href="/privacy" className={styles.bottomLink}>Privacy</Link>
+                    <Link href="/terms" className={styles.bottomLink}>Terms</Link>
                 </div>
             </div>
         </footer>
