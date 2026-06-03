@@ -53,6 +53,7 @@ const Navbar = () => {
     }, []);
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        const wasOpen = mobileMenuOpen;
         setMobileMenuOpen(false);
         if (typeof window !== "undefined" && window.location.pathname === "/") {
             const hashIndex = href.indexOf("#");
@@ -61,8 +62,17 @@ const Navbar = () => {
                 const el = document.getElementById(id);
                 if (el) {
                     e.preventDefault();
-                    el.scrollIntoView({ behavior: "smooth" });
-                    setActive(id);
+                    if (wasOpen) {
+                        // Delay scroll on mobile to let the menu exit transition finish,
+                        // avoiding scroll cancellation from the layout collapse.
+                        setTimeout(() => {
+                            el.scrollIntoView({ behavior: "smooth" });
+                            setActive(id);
+                        }, 350);
+                    } else {
+                        el.scrollIntoView({ behavior: "smooth" });
+                        setActive(id);
+                    }
                 }
             }
         }

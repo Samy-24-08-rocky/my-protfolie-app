@@ -21,6 +21,7 @@
     padding: 20px 24px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 32px;
 }
 
@@ -216,5 +217,7 @@
 
     .mobileToggle {
         display: flex;
+        width: 44px;
+        height: 44px;
     }
 }
