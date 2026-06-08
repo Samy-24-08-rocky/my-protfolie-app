@@ -2,11 +2,17 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Project, GalleryItem } from '@/lib/models';
 import { revalidatePath } from 'next/cache';
+import { verifySession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
     try {
+        const session = await verifySession();
+        if (!session) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { action } = await request.json();
         await dbConnect();
 
